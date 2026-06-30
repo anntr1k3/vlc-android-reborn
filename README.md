@@ -1,4 +1,12 @@
-# VLC for Android
+# VLC for Android — Reborn (fork)
+
+> **Note:** This is a personal fork of [VLC for Android](https://code.videolan.org/videolan/vlc-android)
+> aimed at optimizing and modernizing the Android application layer with the help of AI tools.
+> It is **not** an official VideoLAN project. Licensed under GPL, same as upstream (see [COPYING](COPYING)).
+> Upstream remote: `https://code.videolan.org/videolan/vlc-android` · base snapshot: tag `upstream-base-20260615`.
+> See [CHANGELOG-REBORN.md](CHANGELOG-REBORN.md) for fork-specific changes.
+
+---
 
 This is the official **Android** port of [VLC](https://videolan.org/vlc/).
 
