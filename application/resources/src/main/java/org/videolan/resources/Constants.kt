@@ -193,8 +193,6 @@ const val CURRENT_BROWSER_MAP = "CURRENT_BROWSER_MAP"
 //Dummy items
 const val DUMMY_NEW_GROUP = 0L
 
-//Moviepedia
-const val MOVIEPEDIA_MEDIA: String = "moviepedia_media"
 
 // Database
 const val TYPE_NETWORK_FAV = 0
@@ -226,7 +224,6 @@ const val TV_MAIN_ACTIVITY = "org.videolan.television.ui.MainTvActivity"
 const val TV_CONFIRMATION_ACTIVITY = "org.videolan.television.ui.dialogs.ConfirmationTvActivity"
 const val TV_PREFERENCE_ACTIVITY = "org.videolan.television.ui.preferences.PreferencesActivity"
 const val MOBILE_MAIN_ACTIVITY = "org.videolan.vlc.gui.MainActivity"
-const val MOVIEPEDIA_ACTIVITY = "org.videolan.moviepedia.ui.MoviepediaActivity"
 const val TV_AUDIOPLAYER_ACTIVITY = "org.videolan.television.ui.audioplayer.AudioPlayerActivity"
 const val MEDIAPARSING_SERVICE = "org.videolan.vlc.MediaParsingService"
 const val TV_ONBOARDING_ACTIVITY = "org.videolan.television.ui.OnboardingActivity"

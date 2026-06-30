@@ -118,13 +118,6 @@ fun getMediaIconDrawable(context: Context?, type: Int, big: Boolean = false): Bi
     }
 }
 
-fun getMoviepediaIconDrawable(context: Context?, type: Long, big: Boolean = false): BitmapDrawable? = context?.let {
-    when (type) {
-        HEADER_MOVIES -> if (big) UiTools.getDefaultMovieDrawableBig(it) else UiTools.getDefaultMovieDrawable(it)
-        HEADER_TV_SHOW -> if (big) UiTools.getDefaultTvshowDrawableBig(it) else UiTools.getDefaultTvshowDrawable(it)
-        else -> null
-    }
-}
 
 @TargetApi(Build.VERSION_CODES.LOLLIPOP)
 fun getBitmapFromDrawable(context: Context, @DrawableRes drawableId: Int): Bitmap {

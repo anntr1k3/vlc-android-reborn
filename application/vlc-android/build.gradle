@@ -33,7 +33,6 @@ android {
         buildConfigField 'String', 'LIBVLC_VERSION', "\"${rootProject.ext.libvlcVersion}\""
         buildConfigField 'String', 'ML_VERSION', "\"${rootProject.ext.medialibraryVersion}\""
         buildConfigField "String", "APP_ID", "\"${rootProject.ext.appId}\""
-        buildConfigField "String", "MOVIEPEDIA_API_URL", "\"${getMoviepediaUrl(project)}\""
         buildConfigField 'int', 'VLC_VERSION_CODE', "${rootProject.ext.versionCode}"
         buildConfigField 'String', 'VLC_VERSION_NAME', "\"${rootProject.ext.versionName}\""
         buildConfigField 'String[]', 'TRANSLATION_ARRAY', generateTranslation()
@@ -318,6 +317,3 @@ def isBeta() {
     return (versionNameLower.contains("beta") || versionNameLower.contains("rc") || versionNameLower.contains("alpha") || versionNameLower.contains("dev")).toString()
 }
 
-static def getMoviepediaUrl(project) {
-    if (project.hasProperty('moviepedia_api_url')) return project.properties['moviepedia_api_url'] else return "https://localhost/"
-}

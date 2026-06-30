@@ -1202,9 +1202,6 @@
         <activity android:name=".gui.DebugLogActivity"
                 android:theme="@style/Theme.VLC"
                 android:launchMode="singleTop" />
-        <activity
-            android:name="org.videolan.moviepedia.ui.MediaScrapingActivity"
-            android:theme="@style/Theme.VLC" />
         <service android:name=".DebugLogService"
                 android:process=":logger"
                 android:foregroundServiceType="dataSync" />

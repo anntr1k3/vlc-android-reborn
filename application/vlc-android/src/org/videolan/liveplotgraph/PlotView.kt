@@ -30,6 +30,8 @@ import android.graphics.Paint
 import android.util.AttributeSet
 import android.util.Log
 import android.widget.FrameLayout
+import org.videolan.resources.R
+import org.videolan.vlc.BuildConfig
 import org.videolan.tools.dp
 import kotlin.math.log10
 import kotlin.math.pow

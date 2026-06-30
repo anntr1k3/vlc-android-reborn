@@ -31,6 +31,7 @@ import android.util.Log
 import android.widget.GridLayout
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
+import org.videolan.resources.R
 import org.videolan.tools.dp
 
 class LegendView : ConstraintLayout, PlotViewDataChangeListener {
