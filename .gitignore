@@ -77,3 +77,7 @@ libvlc.pc.backup
 libvlcpp.pc
 lib/
 /buildsystem/automation/certificates/
+
+# Local gradle distribution (Phase 0 bootstrap)
+gradle-*-bin.zip
+/gradle-9*/

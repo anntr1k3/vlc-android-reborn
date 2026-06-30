@@ -160,8 +160,10 @@ task generateSources(type: Jar) {
 }
 
 dependencies {
-    devApi project(':libvlcjni:libvlc')
-    devApi project(':medialibrary')
+    // The 'dev' flavor links the locally-built native modules; only wire them when present
+    // (they are excluded from this fork's repo). debug/release use prebuilt Maven AARs below.
+    if (findProject(':libvlcjni:libvlc') != null) devApi project(':libvlcjni:libvlc')
+    if (findProject(':medialibrary') != null) devApi project(':medialibrary')
     debugApi "org.videolan.android:libvlc-all:$rootProject.ext.libvlcVersion"
     debugApi "org.videolan.android:medialibrary-all:$rootProject.ext.medialibraryVersion"
     releaseApi "org.videolan.android:libvlc-all:$rootProject.ext.libvlcVersion"
@@ -188,6 +190,9 @@ dependencies {
     api "androidx.lifecycle:lifecycle-livedata-ktx:$rootProject.ext.lifecycleVersion"
     api "androidx.lifecycle:lifecycle-common-java8:$rootProject.ext.lifecycleVersion"
     api "androidx.room:room-runtime:$rootProject.ext.roomVersion"
+    // room-ktx is required for coroutine/suspend DAO support on Room 2.6.x (merged into
+    // room-runtime only in 2.7.0). Previously pulled transitively before the androidx bump.
+    api "androidx.room:room-ktx:$rootProject.ext.roomVersion"
     api "androidx.window:window:$rootProject.ext.windowVersion"
     api "androidx.media:media:$rootProject.ext.mediaVersion"
     api 'androidx.gridlayout:gridlayout:1.0.0'

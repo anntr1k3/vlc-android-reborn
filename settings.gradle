@@ -12,12 +12,20 @@ plugins {
 def vlcMajorVersion = hasProperty('forceVlc4') && getProperty('forceVlc4') ? 4 : 3
 
 android {
-    minSdk = vlcMajorVersion == 3 ? 17 : 23
+    minSdk = vlcMajorVersion == 3 ? 21 : 23
     targetSdk = 36
     compileSdk = 36 // Dockers: 3.0=36 / 4.0=36
     buildToolsVersion = '36.0.0'
 }
 
-include ':libvlcjni:libvlc', ':medialibrary'
+// Native engine modules are only present when libVLC/medialibrary have been built locally
+// (see buildsystem/). For app-layer builds the debug/release flavors use prebuilt Maven AARs
+// (org.videolan.android:libvlc-all / medialibrary-all), so include these only if they exist.
+// Presence of the libVLC native module is the marker of a full local native build.
+// medialibrary depends on it, so both are gated together.
+if (file("${rootDir}/libvlcjni/libvlc").isDirectory()) {
+    include ':libvlcjni:libvlc'
+    include ':medialibrary'
+}
 include ':application:tools', ':application:resources', ':application:app', ':application:television'
 include ':application:vlc-android'
