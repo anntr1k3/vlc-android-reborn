@@ -22,7 +22,18 @@ First, low-risk pass over deprecated APIs (build stays green):
   lenient `buildLocale()` helper (`Locale.Builder` + legacy fallback for malformed ids).
 - Wrapped `overridePendingTransition` in `overrideOpen/CloseTransitionCompat` extensions
   that use `Activity.overrideActivityTransition` on API 34+ (behaviour unchanged below 34).
-- Deferred: `android.app.ProgressDialog` in MediaUtils (needs a custom replacement dialog).
+- Replaced `android.app.ProgressDialog` in MediaUtils with an AppCompat AlertDialog
+  + indeterminate ProgressBar (completes the safe cluster).
+
+### Phase 1 — Medium migration (Activity Result API, safe sites only)
+Migrated isolated, non-permission `startActivityForResult`/`onActivityResult` pairs to
+`registerForActivityResult` (no behaviour change; build green):
+- PreferencesActivity: settings search result.
+- PreferencesAudio: soundfont file picker.
+- PreferencesAdvanced: restore-settings file picker.
+Deferred (need on-device validation): permission/OTG/SAF flows, restart-propagating
+results, and the MenuProvider + launchWhenStarted migrations (entangled with the
+fragment inheritance hierarchy / runtime lifecycle semantics).
 
 
 ### Project setup

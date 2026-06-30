@@ -53,12 +53,21 @@ import org.videolan.vlc.widget.utils.refreshAllWidgets
 const val EXTRA_PREF_END_POINT = "extra_pref_end_point"
 class PreferencesActivity : BaseActivity() {
 
-    private val searchRequestCode = 167
     private var mAppBarLayout: AppBarLayout? = null
     override val displayTitle = true
     private var pinCodeResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
         if (result.resultCode != RESULT_OK) {
             finish()
+        }
+    }
+    private val searchResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+        if (result.resultCode == RESULT_OK) {
+            result.data?.extras?.parcelable<PreferenceItem>(EXTRA_PREF_END_POINT)?.let {
+                supportFragmentManager.popBackStack()
+                supportFragmentManager.beginTransaction()
+                        .replace(R.id.fragment_placeholder, PreferencesFragment().apply { arguments = bundleOf(EXTRA_PREF_END_POINT to it) })
+                        .commit()
+            }
         }
     }
     override fun getSnackAnchorView(overAudioPlayer:Boolean): View? = findViewById(android.R.id.content)
@@ -103,23 +112,10 @@ class PreferencesActivity : BaseActivity() {
                 return true
             }
             R.id.menu_pref_search -> {
-                startActivityForResult(Intent(this, PreferenceSearchActivity::class.java), searchRequestCode)
+                searchResult.launch(Intent(this, PreferenceSearchActivity::class.java))
             }
         }
         return super.onOptionsItemSelected(item)
-    }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == searchRequestCode && resultCode == RESULT_OK) {
-            data?.extras?.parcelable<PreferenceItem>(EXTRA_PREF_END_POINT)?.let {
-                supportFragmentManager.popBackStack()
-                supportFragmentManager.beginTransaction()
-                        .replace(R.id.fragment_placeholder, PreferencesFragment().apply { arguments = bundleOf(EXTRA_PREF_END_POINT to it) })
-                        .commit()
-            }
-        }
-
     }
 
     fun exitAndRescan() {

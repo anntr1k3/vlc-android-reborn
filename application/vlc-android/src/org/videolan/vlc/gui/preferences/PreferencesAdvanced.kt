@@ -42,6 +42,7 @@ import androidx.core.os.bundleOf
 import androidx.core.text.isDigitsOnly
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.lifecycleScope
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.preference.CheckBoxPreference
 import androidx.preference.EditTextPreference
 import androidx.preference.ListPreference
@@ -109,13 +110,34 @@ import org.videolan.vlc.util.share
 import java.io.File
 import java.io.IOException
 
-private const val FILE_PICKER_RESULT_CODE = 10000
 private const val RESULT_VALUE_CLEAR_HISTORY = 1
 private const val RESULT_VALUE_CLEAR_MEDIA_DATABASE = 2
 private const val RESULT_VALUE_CLEAR_APP_DATA = 3
 class PreferencesAdvanced : BasePreferenceFragment(), SharedPreferences.OnSharedPreferenceChangeListener {
 
     private var needToRestartOnResume = false
+
+    private val restoreSettingsPicker = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+        val data = result.data ?: return@registerForActivityResult
+        if (data.hasExtra(EXTRA_MRL)) {
+            lifecycleScope.launch {
+                try {
+                    PreferenceParser.restoreSettings(requireActivity(), data.getStringExtra(EXTRA_MRL)!!.toUri())
+                    var continueRestart = true
+                    if (Settings.getInstance(requireActivity()).getBoolean(POPUP_FORCE_LEGACY, false) && !Permissions.canDrawOverlays(requireActivity()))
+                        continueRestart = !Permissions.checkDrawOverlaysPermission(requireActivity())
+                    if (continueRestart) {
+                        VLCInstance.restart()
+                        UiTools.restartDialog(requireActivity())
+                    } else needToRestartOnResume = true
+                } catch (e: Exception) {
+                    Log.e("EqualizerSettings", "restoreSettings: ${e.message}", e)
+                    UiTools.snacker(requireActivity(), getString(R.string.invalid_settings_file))
+                }
+            }
+        }
+    }
+
     override fun getXml() =  R.xml.preferences_adv
 
     override fun getTitleId(): Int {
@@ -371,41 +393,11 @@ class PreferencesAdvanced : BasePreferenceFragment(), SharedPreferences.OnShared
             "restore_settings" -> {
                 val filePickerIntent = Intent(requireContext(), FilePickerActivity::class.java)
                 filePickerIntent.putExtra(KEY_PICKER_TYPE, PickerType.SETTINGS.ordinal)
-                startActivityForResult(filePickerIntent, FILE_PICKER_RESULT_CODE)
-
-
-
+                restoreSettingsPicker.launch(filePickerIntent)
                 return true
             }
         }
         return super.onPreferenceTreeClick(preference)
-    }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if (data == null) return
-        if (requestCode == FILE_PICKER_RESULT_CODE) {
-            if (data.hasExtra(EXTRA_MRL)) {
-                lifecycleScope.launch {
-                    try {
-                        PreferenceParser.restoreSettings(
-                            requireActivity(),
-                                data.getStringExtra(EXTRA_MRL)!!.toUri()
-                        )
-                        var continueRestart = true
-                        if (Settings.getInstance(requireActivity()).getBoolean(POPUP_FORCE_LEGACY, false) && !Permissions.canDrawOverlays(requireActivity()))
-                            continueRestart = !Permissions.checkDrawOverlaysPermission(requireActivity())
-                        if (continueRestart) {
-                            VLCInstance.restart()
-                            UiTools.restartDialog(requireActivity())
-                        } else needToRestartOnResume = true
-                    } catch (e: Exception) {
-                        Log.e("EqualizerSettings", "onActivityResult: ${e.message}", e)
-                        UiTools.snacker(requireActivity(), getString(R.string.invalid_settings_file))
-                    }
-                }
-            }
-        }
     }
 
     override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences?, key: String?) {

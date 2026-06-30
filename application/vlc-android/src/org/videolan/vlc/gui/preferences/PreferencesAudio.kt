@@ -31,6 +31,7 @@ import android.util.Log
 import androidx.core.content.edit
 import androidx.core.net.toUri
 import androidx.lifecycle.lifecycleScope
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.preference.EditTextPreference
 import androidx.preference.ListPreference
 import androidx.preference.Preference
@@ -63,11 +64,21 @@ import java.text.DecimalFormatSymbols
 import java.util.Locale
 
 private const val TAG = "VLC/PreferencesAudio"
-private const val FILE_PICKER_RESULT_CODE = 10000
 
 class PreferencesAudio : BasePreferenceFragment(), SharedPreferences.OnSharedPreferenceChangeListener {
 
     private lateinit var preferredAudioTrack: ListPreference
+
+    private val soundFontPicker = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+        val data = result.data ?: return@registerForActivityResult
+        if (data.hasExtra(EXTRA_MRL)) {
+            lifecycleScope.launch {
+                MediaUtils.useAsSoundFont(requireActivity(), data.getStringExtra(EXTRA_MRL)!!.toUri())
+                VLCInstance.restart()
+            }
+            UiTools.restartDialog(requireActivity())
+        }
+    }
 
     override fun getXml() = R.xml.preferences_audio
 
@@ -122,24 +133,10 @@ class PreferencesAudio : BasePreferenceFragment(), SharedPreferences.OnSharedPre
             "soundfont" -> {
                 val filePickerIntent = Intent(requireContext(), FilePickerActivity::class.java)
                 filePickerIntent.putExtra(KEY_PICKER_TYPE, PickerType.SOUNDFONT.ordinal)
-                startActivityForResult(filePickerIntent, FILE_PICKER_RESULT_CODE)
+                soundFontPicker.launch(filePickerIntent)
             }
         }
         return super.onPreferenceTreeClick(preference)
-    }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if (data == null) return
-        if (requestCode == FILE_PICKER_RESULT_CODE) {
-            if (data.hasExtra(EXTRA_MRL)) {
-                lifecycleScope.launch {
-                    MediaUtils.useAsSoundFont(requireActivity(), data.getStringExtra(EXTRA_MRL)!!.toUri())
-                    VLCInstance.restart()
-                }
-                UiTools.restartDialog(requireActivity())
-            }
-        }
     }
 
     override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences?, key: String?) {
