@@ -119,7 +119,8 @@ class FrameRateManager(val activity: FragmentActivity, val service: PlaybackServ
     @RequiresApi(Build.VERSION_CODES.M)
     fun setFrameRateM(videoFrameRate: Float, window: Window) {
         val wm = activity.getSystemService<WindowManager>()!!
-        val display = wm.defaultDisplay
+        val display = (if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) activity.display else null)
+                ?: @Suppress("DEPRECATION") wm.defaultDisplay
         //only change frame rate if video is longer than 5 minutes
         if (service.mediaplayer.length > SHORT_VIDEO_LENGTH) {
             //on older versions of Android use this manual frame rate switching method

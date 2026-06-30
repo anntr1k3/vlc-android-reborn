@@ -70,6 +70,8 @@ import org.videolan.vlc.util.DialogDelegate
 import org.videolan.vlc.util.IDialogManager
 import org.videolan.vlc.util.Permissions
 import org.videolan.vlc.util.isSchemeNetwork
+import org.videolan.vlc.util.overrideCloseTransitionCompat
+import org.videolan.vlc.util.overrideOpenTransitionCompat
 
 class SecondaryActivity : ContentActivity(), IDialogManager {
 
@@ -142,19 +144,19 @@ class SecondaryActivity : ContentActivity(), IDialogManager {
     override fun dialogCanceled(dialog: Dialog?) {}
 
     override fun onResume() {
-        if (!intent.getBooleanExtra(KEY_ANIMATED, false)) overridePendingTransition(0, 0)
+        if (!intent.getBooleanExtra(KEY_ANIMATED, false)) overrideOpenTransitionCompat(0, 0)
         super.onResume()
     }
 
     override fun onPause() {
         if (!intent.getBooleanExtra(KEY_ANIMATED, false) && isFinishing)
-            overridePendingTransition(0, 0)
+            overrideCloseTransitionCompat(0, 0)
         super.onPause()
     }
 
     override fun finish() {
         super.finish()
-        if (intent.getBooleanExtra(KEY_ANIMATED, false)) overridePendingTransition(R.anim.no_animation, R.anim.slide_out_bottom)
+        if (intent.getBooleanExtra(KEY_ANIMATED, false)) overrideCloseTransitionCompat(R.anim.no_animation, R.anim.slide_out_bottom)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

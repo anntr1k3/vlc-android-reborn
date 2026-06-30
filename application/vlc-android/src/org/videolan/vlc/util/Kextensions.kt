@@ -13,7 +13,6 @@ import android.text.Spannable
 import android.text.SpannableString
 import android.text.style.DynamicDrawableSpan
 import android.text.style.ImageSpan
-import android.util.DisplayMetrics
 import android.view.View
 import android.view.ViewGroup.MarginLayoutParams
 import android.widget.TextView
@@ -28,6 +27,7 @@ import androidx.core.widget.TextViewCompat
 import androidx.databinding.BindingAdapter
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
+import androidx.window.layout.WindowMetricsCalculator
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.LifecycleCoroutineScope
 import androidx.lifecycle.LifecycleOwner
@@ -347,14 +347,30 @@ fun Int.toPixel(): Int {
     return px.roundToInt()
 }
 
-fun Activity.getScreenWidth() : Int {
-    val dm = DisplayMetrics().also { windowManager.defaultDisplay.getMetrics(it) }
-    return dm.widthPixels
+fun Activity.getScreenWidth(): Int =
+        WindowMetricsCalculator.getOrCreate().computeMaximumWindowMetrics(this).bounds.width()
+
+fun Activity.getScreenHeight(): Int =
+        WindowMetricsCalculator.getOrCreate().computeMaximumWindowMetrics(this).bounds.height()
+
+/**
+ * Custom enter transition for this activity. Uses [Activity.overrideActivityTransition] on API 34+
+ * and falls back to the deprecated [Activity.overridePendingTransition] on older versions.
+ */
+fun Activity.overrideOpenTransitionCompat(enterAnim: Int, exitAnim: Int) {
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE)
+        overrideActivityTransition(Activity.OVERRIDE_TRANSITION_OPEN, enterAnim, exitAnim)
+    else @Suppress("DEPRECATION") overridePendingTransition(enterAnim, exitAnim)
 }
 
-fun Activity.getScreenHeight(): Int {
-    val dm = DisplayMetrics().also { windowManager.defaultDisplay.getMetrics(it) }
-    return dm.heightPixels
+/**
+ * Custom exit/close transition for this activity. Uses [Activity.overrideActivityTransition] on
+ * API 34+ and falls back to the deprecated [Activity.overridePendingTransition] on older versions.
+ */
+fun Activity.overrideCloseTransitionCompat(enterAnim: Int, exitAnim: Int) {
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE)
+        overrideActivityTransition(Activity.OVERRIDE_TRANSITION_CLOSE, enterAnim, exitAnim)
+    else @Suppress("DEPRECATION") overridePendingTransition(enterAnim, exitAnim)
 }
 
 /**

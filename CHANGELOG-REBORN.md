@@ -13,6 +13,18 @@ For upstream changes, see [NEWS](NEWS) and the upstream repository
 
 ## Unreleased
 
+### Phase 1 — Code modernization (safe deprecation cleanup)
+First, low-risk pass over deprecated APIs (build stays green):
+- Centralized screen-size helpers (`getScreenWidth`/`getScreenHeight`) on AndroidX
+  `WindowMetricsCalculator` instead of the deprecated `defaultDisplay.getMetrics`;
+  `FrameRateManager` now uses `activity.display` on API 30+ with a fallback.
+- Replaced deprecated `Locale(String)` / `Locale(lang, country)` constructors with a
+  lenient `buildLocale()` helper (`Locale.Builder` + legacy fallback for malformed ids).
+- Wrapped `overridePendingTransition` in `overrideOpen/CloseTransitionCompat` extensions
+  that use `Activity.overrideActivityTransition` on API 34+ (behaviour unchanged below 34).
+- Deferred: `android.app.ProgressDialog` in MediaUtils (needs a custom replacement dialog).
+
+
 ### Project setup
 - Initialized fork repository, published to `anntr1k3/vlc-android-reborn` (private).
 - Added `upstream` remote pointing to VideoLAN GitLab (push disabled).

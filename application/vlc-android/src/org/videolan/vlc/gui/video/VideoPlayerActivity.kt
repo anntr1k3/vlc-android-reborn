@@ -237,6 +237,8 @@ import org.videolan.vlc.util.Permissions
 import org.videolan.vlc.util.Util
 import org.videolan.vlc.util.hasNotch
 import org.videolan.vlc.util.isTalkbackIsEnabled
+import org.videolan.vlc.util.overrideCloseTransitionCompat
+import org.videolan.vlc.util.overrideOpenTransitionCompat
 import org.videolan.vlc.util.share
 import org.videolan.vlc.viewmodels.BookmarkModel
 import org.videolan.vlc.viewmodels.PlaylistModel
@@ -744,7 +746,7 @@ open class VideoPlayerActivity : AppCompatActivity(), PlaybackService.Callback, 
     }
 
     override fun onResume() {
-        overridePendingTransition(0, 0)
+        overrideOpenTransitionCompat(0, 0)
         super.onResume()
         isShowingDialog = false
         waitingForPin = false
@@ -797,7 +799,7 @@ open class VideoPlayerActivity : AppCompatActivity(), PlaybackService.Callback, 
     override fun onPause() {
         val finishing = isFinishing
         if (finishing)
-            overridePendingTransition(0, 0)
+            overrideCloseTransitionCompat(0, 0)
         else
             overlayDelegate.hideOverlay(true)
         super.onPause()

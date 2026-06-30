@@ -13,6 +13,7 @@ import org.videolan.resources.KEY_ANIMATED
 import org.videolan.tools.*
 import org.videolan.vlc.R
 import org.videolan.vlc.gui.SecondaryActivity
+import org.videolan.vlc.util.overrideOpenTransitionCompat
 
 class OnboardingScanningFragment : OnboardingFragment() {
     private val viewModel: OnboardingViewModel by activityViewModels()
@@ -40,7 +41,7 @@ class OnboardingScanningFragment : OnboardingFragment() {
             intent.putExtra("fragment", SecondaryActivity.STORAGE_BROWSER_ONBOARDING)
             intent.putExtra(KEY_ANIMATED, true)
             requireActivity().startActivity(intent)
-            activity.overridePendingTransition(R.anim.slide_in_bottom, R.anim.no_animation)
+            activity.overrideOpenTransitionCompat(R.anim.slide_in_bottom, R.anim.no_animation)
         }
     }
 

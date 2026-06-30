@@ -4,8 +4,22 @@ import android.annotation.TargetApi
 import android.content.Context
 import android.content.ContextWrapper
 import android.os.Build
+import java.util.IllformedLocaleException
 import java.util.Locale
 import java.util.TreeMap
+
+/**
+ * Builds a [Locale] from a language (and optional country) without the deprecated
+ * [Locale] constructors. Falls back to the legacy constructor if the input is not a
+ * well-formed BCP 47 subtag, preserving the previous lenient behaviour for arbitrary
+ * language ids (e.g. subtitle language codes).
+ */
+@Suppress("DEPRECATION")
+fun buildLocale(language: String, country: String = ""): Locale = try {
+    Locale.Builder().setLanguage(language).apply { if (country.isNotEmpty()) setRegion(country) }.build()
+} catch (e: IllformedLocaleException) {
+    if (country.isNotEmpty()) Locale(language, country) else Locale(language)
+}
 
 object LocaleUtils {
 
@@ -97,13 +111,13 @@ object LocaleUtils {
                 val splittedLocale =
                     string.split(separator.toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
                 if (splittedLocale.size == 2) {
-                    return Locale(splittedLocale[0], splittedLocale[1])
+                    return buildLocale(splittedLocale[0], splittedLocale[1])
                 }
             }
         }
 
 
-        return Locale(string)
+        return buildLocale(string)
     }
 }
 
@@ -119,7 +133,7 @@ fun ContextWrapper.wrap(language: String): ContextWrapper {
     }
 
     if (language.isNotEmpty() && sysLocale.language != language) {
-        val locale = if (language.contains("-")) Locale(language.substringBefore("-"), language.substringAfter("-")) else Locale(language)
+        val locale = if (language.contains("-")) buildLocale(language.substringBefore("-"), language.substringAfter("-")) else buildLocale(language)
         Locale.setDefault(locale)
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
