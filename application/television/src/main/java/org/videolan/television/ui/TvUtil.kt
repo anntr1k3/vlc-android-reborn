@@ -44,7 +44,6 @@ import org.videolan.medialibrary.interfaces.media.MediaWrapper
 import org.videolan.medialibrary.interfaces.media.Playlist
 import org.videolan.medialibrary.media.DummyItem
 import org.videolan.medialibrary.media.MediaLibraryItem
-import org.videolan.moviepedia.database.models.MediaMetadataWithImages
 import org.videolan.resources.CATEGORY_ALBUMS
 import org.videolan.resources.HEADER_CATEGORIES
 import org.videolan.resources.HEADER_DIRECTORIES
@@ -104,12 +103,6 @@ object TvUtil {
             return if (oldMedia.artworkMrl != newMedia.artworkMrl) UPDATE_THUMB
             else UPDATE_SEEN
         }
-    }
-
-    var metadataDiffCallback = object : DiffCallback<MediaMetadataWithImages>() {
-        override fun areItemsTheSame(oldItem: MediaMetadataWithImages, newItem: MediaMetadataWithImages) = oldItem.metadata.moviepediaId == newItem.metadata.moviepediaId
-
-        override fun areContentsTheSame(oldItem: MediaMetadataWithImages, newItem: MediaMetadataWithImages) = oldItem.metadata.moviepediaId == newItem.metadata.moviepediaId && oldItem.metadata.title == newItem.metadata.title && oldItem.metadata.currentPoster == newItem.metadata.currentPoster
     }
 
     val listDiffCallback: DiffCallback<ListRow> = object : DiffCallback<ListRow>() {
@@ -333,15 +326,6 @@ fun CoroutineScope.updateBackground(activity: Activity, bm: BackgroundManager?, 
             if (!isActive) return@launch
             blurred?.let { bm.drawable = BitmapDrawable(activity.resources, it) }
         }
-    } else if (item is MediaMetadataWithImages) launch {
-        val blurred = withContext(Dispatchers.IO) {
-            var cover: Bitmap? = HttpImageLoader.downloadBitmap(item.metadata.currentPoster)
-            cover?.let { cover = BitmapUtil.centerCrop(it, it.width, (it.width / screenRatio).toInt()) }
-            UiTools.blurBitmap(cover, 10f)
-        }
-        if (!isActive) return@launch
-        blurred?.let { bm.drawable = BitmapDrawable(activity.resources, it) }
-
     }
 }
 

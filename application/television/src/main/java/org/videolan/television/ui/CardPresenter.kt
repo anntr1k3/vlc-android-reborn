@@ -45,7 +45,6 @@ import org.videolan.medialibrary.Tools
 import org.videolan.medialibrary.interfaces.media.MediaWrapper
 import org.videolan.medialibrary.media.DummyItem
 import org.videolan.medialibrary.media.MediaLibraryItem
-import org.videolan.moviepedia.models.resolver.ResolverMedia
 import org.videolan.resources.AppContextProvider
 import org.videolan.resources.BuildConfig
 import org.videolan.resources.CATEGORY_NOW_PLAYING
@@ -188,12 +187,6 @@ class CardPresenter(private val context: FragmentActivity, private val isPoster:
                     TvUtil.showMediaDetail(v.context, item, fromHistory)
                     true
                 }
-            }
-            is ResolverMedia -> {
-                holder.cardView.titleText = item.title()
-                holder.cardView.contentText = item.getCardSubtitle()
-
-                holder.updateCardViewImage(item.imageUri(context.getLocaleLanguages()))
             }
             is MediaLibraryItem -> {
                 holder.cardView.titleText = item.title

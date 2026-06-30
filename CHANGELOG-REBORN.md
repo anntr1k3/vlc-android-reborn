@@ -17,3 +17,26 @@ For upstream changes, see [NEWS](NEWS) and the upstream repository
 - Initialized fork repository, published to `anntr1k3/vlc-android-reborn` (private).
 - Added `upstream` remote pointing to VideoLAN GitLab (push disabled).
 - Added README fork notice and this changelog.
+
+### Phase 0 — Build stabilization
+The snapshot inherited from the previous session did not compile. Fixed so that
+`./gradlew :application:app:assembleDebug` produces a working APK (uses prebuilt
+libVLC/medialibrary Maven AARs; native engine not required):
+- Restored Gradle wrapper (9.3.1); guarded native module includes by directory
+  presence so the app layer builds without the C/C++ engine.
+- Bumped vlc3 `minSdk` 17 → 21 (material 1.12.0 requires ≥19; legacy floor dropped).
+- Added `androidx.room:room-ktx` for coroutine/suspend DAO support on Room 2.6.x.
+- Fixed `onRequestPermissionsResult` signature (`Array<out String>`) broken by the
+  previous androidx version bump (MainActivity, BaseActivity, OnboardingActivity).
+- Fixed liveplotgraph R/BuildConfig imports after its de-modularization.
+- Removed dead remote-access references left by the previous session
+  (`ic_remote_access_big`, `REMOTE_ACCESS_ONBOARDING`, `preferences_remote_access`).
+
+### Removed: moviepedia (movie/TV metadata scraper)
+Fully removed the moviepedia feature (the previous report claimed this was done,
+but it was only partially de-modularized and left non-compiling):
+- Deleted moviepedia source tree, layouts, app delegates and Room database.
+- Removed the "Find metadata" context action and `MOVIEPEDIA_*` constants.
+- Removed the metadata-enriched Android TV surface: home "recently played/added"
+  rows, scraping browse/details/search, and all dedicated TV presenters/activities.
+  Android TV still works but without scraped metadata (titles/posters/cast).
