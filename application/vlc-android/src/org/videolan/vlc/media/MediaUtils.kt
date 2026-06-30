@@ -1,7 +1,8 @@
 package org.videolan.vlc.media
 
 import android.app.Activity
-import android.app.ProgressDialog
+import android.widget.ProgressBar
+import androidx.appcompat.app.AlertDialog
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
@@ -416,7 +417,7 @@ object MediaUtils {
     }
 
     class SuspendDialogCallback(context: Context, private val task: suspend (service: PlaybackService) -> Unit) {
-        private lateinit var dialog: ProgressDialog
+        private lateinit var dialog: AlertDialog
         var job: Job = Job()
         val scope = context.scope
         @OptIn(ObsoleteCoroutinesApi::class)
@@ -444,12 +445,15 @@ object MediaUtils {
         init {
             job = scope.launch {
                 delay(300)
-                dialog = ProgressDialog.show(
-                        context,
-                        "${context.applicationContext.getString(R.string.loading)}…",
-                        context.applicationContext.getString(R.string.please_wait), true)
-                dialog.setCancelable(true)
-                dialog.setOnCancelListener { actor.trySend(Disconnect) }
+                val padding = (24 * context.resources.displayMetrics.density).toInt()
+                val spinner = ProgressBar(context).apply { setPadding(padding, padding, padding, 0) }
+                dialog = AlertDialog.Builder(context)
+                        .setTitle("${context.applicationContext.getString(R.string.loading)}…")
+                        .setMessage(context.applicationContext.getString(R.string.please_wait))
+                        .setView(spinner)
+                        .setCancelable(true)
+                        .setOnCancelListener { actor.trySend(Disconnect) }
+                        .show()
             }
             actor.trySend(Connect)
         }
