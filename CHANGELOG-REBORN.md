@@ -13,6 +13,18 @@ For upstream changes, see [NEWS](NEWS) and the upstream repository
 
 ## Unreleased
 
+### Phase 2 — Performance (Baseline Profile)
+- Added a **Baseline Profile** (`application/app/src/main/baseline-prof.txt`, ~16k HRF rules) plus the
+  `androidx.profileinstaller` dependency. The profile AOT-compiles hot startup + browse + playback +
+  scroll paths (app + androidx/kotlin libs), cutting cold-start time and scroll jank on release builds.
+- The profile was captured from a real run on the emulator (launch → video list → playback → tab
+  switches → scroll), extracted from the ART reference profile via on-device `profman
+  --dump-classes-and-methods`, so it reflects actual executed code rather than guesses.
+- Verified: `assembleRelease` runs the ART-profile tasks and packages `assets/dexopt/baseline.prof`
+  (+ `.profm`) into the APK. (Startup was already well-structured — heavy init is deferred to background
+  threads; no main-thread I/O, StrictMode, or jank observed on the test setup, so the profile is the
+  highest-value remaining startup/scroll win. Actual speedup needs release benchmarking on real hardware.)
+
 ### Phase 1 — Code modernization (safe deprecation cleanup)
 First, low-risk pass over deprecated APIs (build stays green):
 - Centralized screen-size helpers (`getScreenWidth`/`getScreenHeight`) on AndroidX

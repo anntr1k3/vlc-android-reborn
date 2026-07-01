@@ -169,6 +169,11 @@ dependencies {
     implementation project(':application:television')
     testImplementation project(':application:television')
 
+    // Installs the bundled baseline profile (src/main/baseline-prof.txt) at first run on
+    // API 24-30; on API 31+ the platform applies it at install time. Improves cold start and
+    // scroll jank for non-debuggable (release) builds via AOT-compiled hot paths.
+    implementation "androidx.profileinstaller:profileinstaller:1.4.1"
+
     androidTestImplementation "androidx.test.espresso:espresso-contrib:$rootProject.espressoVersion"
     androidTestImplementation "androidx.test.espresso:espresso-core:$rootProject.espressoVersion"
     androidTestImplementation "androidx.test.espresso:espresso-intents:$rootProject.espressoVersion"
