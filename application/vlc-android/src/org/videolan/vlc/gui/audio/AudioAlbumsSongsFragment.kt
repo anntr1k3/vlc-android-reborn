@@ -132,7 +132,7 @@ class AudioAlbumsSongsFragment : BaseAudioBrowser<AlbumSongsViewModel>(), SwipeR
         playlistModel.dataset.asFlow().conflate().onEach {
             songsAdapter.setCurrentlyPlaying(playlistModel.playing)
             delay(50L)
-        }.launchWhenStarted(lifecycleScope)
+        }.launchWhenStarted(this@AudioAlbumsSongsFragment)
         adapters = arrayOf(albumsAdapter, songsAdapter)
 
 

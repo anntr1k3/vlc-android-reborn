@@ -29,8 +29,10 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.window.layout.WindowMetricsCalculator
 import androidx.fragment.app.FragmentManager
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleCoroutineScope
 import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.ViewModel
@@ -460,8 +462,10 @@ val View.scope : CoroutineScope
         else -> AppScope
     }
 
-fun <T> Flow<T>.launchWhenStarted(scope: LifecycleCoroutineScope): Job = scope.launchWhenStarted {
-    collect() // tail-call
+fun <T> Flow<T>.launchWhenStarted(owner: LifecycleOwner): Job = owner.lifecycleScope.launch {
+    owner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+        collect()
+    }
 }
 
 /**

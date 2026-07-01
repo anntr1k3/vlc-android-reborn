@@ -331,7 +331,7 @@ open class HeaderMediaListActivity : AudioPlayerContainerActivity(), IEventsHand
         playlistModel.dataset.asFlow().conflate().onEach {
             audioBrowserAdapter.setCurrentlyPlaying(playlistModel.playing)
             delay(50L)
-        }.launchWhenStarted(lifecycleScope)
+        }.launchWhenStarted(this@HeaderMediaListActivity)
         audioBrowserAdapter.setModel(playlistModel)
     }
 

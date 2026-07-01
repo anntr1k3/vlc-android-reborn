@@ -451,7 +451,7 @@ abstract class BaseBrowserFragment : MediaBrowserFragment<BrowserModel>(), IRefr
         playlistModel.dataset.asFlow().conflate().onEach {
             adapter.setCurrentlyPlaying(playlistModel.playing)
             delay(50L)
-        }.launchWhenStarted(lifecycleScope)
+        }.launchWhenStarted(this@BaseBrowserFragment)
     }
 
     override fun onDestroy() {

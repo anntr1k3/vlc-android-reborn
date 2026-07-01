@@ -128,7 +128,7 @@ class MoreFragment : BaseFragment(), IRefreshable, IHistory, IDialogManager,
                 if (it) historyEntry.loading.state = EmptyLoadingState.LOADING
             }
         }
-        historyAdapter.events.onEach { it.process() }.launchWhenStarted(lifecycleScope)
+        historyAdapter.events.onEach { it.process() }.launchWhenStarted(this@MoreFragment)
 
         streamsEntry = view.findViewById(R.id.streams_entry)
         setup(this, streamsViewModel, object : KeyboardListener {

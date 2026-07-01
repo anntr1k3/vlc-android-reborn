@@ -54,7 +54,7 @@ abstract class PlaybackBottomSheetDialogFragment:VLCBottomSheetDialogFragment(),
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        PlaybackService.serviceFlow.onEach { onServiceChanged(it) }.launchWhenStarted(lifecycleScope)
+        PlaybackService.serviceFlow.onEach { onServiceChanged(it) }.launchWhenStarted(this@PlaybackBottomSheetDialogFragment)
     }
 
     private fun onServiceChanged(service: PlaybackService?) {
