@@ -205,7 +205,7 @@ class VideoGridFragment : MediaBrowserFragment<VideosViewModel>(), SwipeRefreshL
             viewModel = getViewModel(grouping, folder, parentGroup)
             setDataObservers()
             EventTools.getInstance().lastThumb.observe(this, thumbObs)
-            videoListAdapter.events.onEach { it.process() }.launchWhenStarted(this@VideoGridFragment)
+            videoListAdapter.events.onEach { it.process() }.launchWhenStarted(lifecycleScope)
         }
     }
 

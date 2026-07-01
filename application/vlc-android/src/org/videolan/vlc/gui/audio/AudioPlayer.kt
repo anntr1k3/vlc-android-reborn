@@ -214,7 +214,7 @@ class AudioPlayer : Fragment(), PlaylistAdapter.IPlayer, TextWatcher, IAudioPlay
             doUpdate()
             playlistAdapter.update(it)
             delay(50L)
-        }.launchWhenStarted(this@AudioPlayer)
+        }.launchWhenStarted(lifecycleScope)
         bookmarkModel = BookmarkModel.get(requireActivity())
         PlaybackService.playerSleepTime.observe(this@AudioPlayer) {
             showChips()

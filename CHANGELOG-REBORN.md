@@ -32,16 +32,8 @@ Migrated isolated, non-permission `startActivityForResult`/`onActivityResult` pa
 - PreferencesAudio: soundfont file picker.
 - PreferencesAdvanced: restore-settings file picker.
 Deferred (need on-device validation): permission/OTG/SAF flows, restart-propagating
-results, and the MenuProvider migration (entangled with the fragment inheritance hierarchy).
-
-### Phase 1 — Medium migration (lifecycle-aware flow collection)
-Modernized the custom `Flow<T>.launchWhenStarted` helper (Kextensions) from the deprecated
-`LifecycleCoroutineScope.launchWhenStarted` to `LifecycleOwner.repeatOnLifecycle(STARTED)`,
-and updated its 9 call sites to pass the owning `this@Fragment`/`this@Activity` (preserves the
-original lifecycle binding). Verified on an emulator (Android 14): app launches and all bottom-nav
-tabs — Video/Audio/Browse/Playlists/More — navigate without crashes.
-Still deferred: the 27 direct one-shot `lifecycleScope.launchWhenStarted { … }` calls (suspend
-bodies; benign deprecation, need per-site judgement) and MenuProvider.
+results, and the MenuProvider + launchWhenStarted migrations (entangled with the
+fragment inheritance hierarchy / runtime lifecycle semantics).
 
 
 ### Project setup

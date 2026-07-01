@@ -111,7 +111,7 @@ class HistoryFragment : MediaBrowserFragment<HistoryModel>(), IRefreshable, IHis
             swipeRefreshLayout.isRefreshing = false
             restoreMultiSelectHelper()
         }
-        historyAdapter.events.onEach { it.process() }.launchWhenStarted(this@HistoryFragment)
+        historyAdapter.events.onEach { it.process() }.launchWhenStarted(lifecycleScope)
         list.layoutManager = LinearLayoutManager(activity)
         list.adapter = historyAdapter
         list.nextFocusUpId = R.id.ml_menu_search
