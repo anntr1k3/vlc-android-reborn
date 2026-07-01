@@ -203,14 +203,14 @@ class AudioAlbumsSongsFragment : BaseAudioBrowser<AlbumSongsViewModel>(), SwipeR
         super.onSaveInstanceState(outState)
     }
 
-    override fun onPrepareOptionsMenu(menu: Menu) {
+    override fun onPrepareMenu(menu: Menu) {
         menu.findItem(R.id.ml_menu_display_options).isVisible = true
         menu.findItem(R.id.ml_menu_sortby).isVisible = false
         sortMenuTitles()
         reopenSearchIfNeeded()
     }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+    override fun onMenuItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.play_all -> {
                 onFabPlayClick(fastScroller)
@@ -234,7 +234,7 @@ class AudioAlbumsSongsFragment : BaseAudioBrowser<AlbumSongsViewModel>(), SwipeR
                     .show(requireActivity().supportFragmentManager, "DisplaySettingsDialog")
                 true
             }
-            else -> super.onOptionsItemSelected(item)
+            else -> super.onMenuItemSelected(item)
         }
     }
 

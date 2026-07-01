@@ -71,9 +71,9 @@ class NetworkBrowserFragment : BaseBrowserFragment(), IDialogManager {
         if (isRootDirectory) swipeRefreshLayout.isEnabled = false
     }
 
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+    override fun onCreateMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.fragment_option_network, menu)
-        super.onCreateOptionsMenu(menu, inflater)
+        super.onCreateMenu(menu, inflater)
     }
 
     override fun containerActivity() = requireActivity()
@@ -82,8 +82,8 @@ class NetworkBrowserFragment : BaseBrowserFragment(), IDialogManager {
     override val isNetwork = true
     override val isFile = false
 
-    override fun onPrepareOptionsMenu(menu: Menu) {
-        super.onPrepareOptionsMenu(menu)
+    override fun onPrepareMenu(menu: Menu) {
+        super.onPrepareMenu(menu)
         val item = menu.findItem(R.id.ml_menu_save)
         item.isVisible = !isRootDirectory
         lifecycleScope.launchWhenStarted {

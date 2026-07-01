@@ -127,10 +127,10 @@ open class FileBrowserFragment : BaseBrowserFragment() {
 
     override fun onMainActionClick(v: View, position: Int, item: MediaLibraryItem) {}
 
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+    override fun onCreateMenu(menu: Menu, inflater: MenuInflater) {
         if (!(this is FilePickerFragment || this is StorageBrowserFragment))
             inflater.inflate(R.menu.fragment_option_network, menu)
-        super.onCreateOptionsMenu(menu, inflater)
+        super.onCreateMenu(menu, inflater)
     }
 
     override fun containerActivity() = requireActivity()
@@ -146,8 +146,8 @@ open class FileBrowserFragment : BaseBrowserFragment() {
             viewModel.reSort()
     }
 
-    override fun onPrepareOptionsMenu(menu: Menu) {
-        super.onPrepareOptionsMenu(menu)
+    override fun onPrepareMenu(menu: Menu) {
+        super.onPrepareMenu(menu)
         val item = menu.findItem(R.id.ml_menu_save) ?: return
         item.isVisible = !isRootDirectory && mrl!!.startsWith("file")
         lifecycleScope.launchWhenStarted {

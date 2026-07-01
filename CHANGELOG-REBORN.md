@@ -13,6 +13,20 @@ For upstream changes, see [NEWS](NEWS) and the upstream repository
 
 ## Unreleased
 
+### Phase 1 — Medium migration (Fragment menus → MenuProvider)
+Migrated all Fragment menus off the deprecated `setHasOptionsMenu` / `onCreateOptionsMenu` /
+`onPrepareOptionsMenu` / `onOptionsItemSelected` APIs to the `MenuProvider` API:
+- `BaseFragment` now implements `MenuProvider` and registers itself via
+  `addMenuProvider(this, viewLifecycleOwner, Lifecycle.State.RESUMED)` — so only the RESUMED
+  (visible) tab contributes menu items, preventing cross-tab duplication. Subclasses simply
+  override `onCreateMenu`/`onPrepareMenu`/`onMenuItemSelected`, preserving the existing
+  template-method super-chaining across the fragment inheritance hierarchy.
+- Migrated 14 fragments in the hierarchy (browser/audio/video/history) plus the standalone
+  `PreferencesAndroidAuto` preference fragment. Activities keep their (non-deprecated) menu callbacks.
+- Verified on emulator (Android 14): Video/Audio/Browse menus each render the correct, distinct
+  items; deep super-chaining (Browse) combines items into one menu; switching tabs and back does
+  NOT duplicate or leak items; no crashes.
+
 ### Phase 2 — Performance (Baseline Profile)
 - Added a **Baseline Profile** (`application/app/src/main/baseline-prof.txt`, ~16k HRF rules) plus the
   `androidx.profileinstaller` dependency. The profile AOT-compiles hot startup + browse + playback +

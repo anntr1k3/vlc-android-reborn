@@ -237,8 +237,8 @@ abstract class BaseBrowserFragment : MediaBrowserFragment<BrowserModel>(), IRefr
         }
     }
 
-    override fun onPrepareOptionsMenu(menu: Menu) {
-        super.onPrepareOptionsMenu(menu)
+    override fun onPrepareMenu(menu: Menu) {
+        super.onPrepareMenu(menu)
         menu.findItem(R.id.ml_menu_display_options)?.isVisible = true
         menu.findItem(R.id.ml_menu_filter)?.isVisible = enableSearchOption()
         menu.findItem(R.id.ml_menu_sortby)?.isVisible = false
@@ -660,11 +660,11 @@ abstract class BaseBrowserFragment : MediaBrowserFragment<BrowserModel>(), IRefr
         adapter.multiSelectHelper.clearSelection()
     }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+    override fun onMenuItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.ml_menu_save -> {
                 toggleFavorite()
-                menu?.let { onPrepareOptionsMenu(it) }
+                menu?.let { onPrepareMenu(it) }
                 true
             }
 
@@ -712,7 +712,7 @@ abstract class BaseBrowserFragment : MediaBrowserFragment<BrowserModel>(), IRefr
                 true
             }
 
-            else -> super.onOptionsItemSelected(item)
+            else -> super.onMenuItemSelected(item)
         }
     }
 

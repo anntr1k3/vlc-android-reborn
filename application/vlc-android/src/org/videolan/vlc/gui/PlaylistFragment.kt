@@ -194,13 +194,13 @@ class PlaylistFragment : BaseAudioBrowser<PlaylistsViewModel>(), SwipeRefreshLay
         return true
     }
 
-    override fun onPrepareOptionsMenu(menu: Menu) {
-        super.onPrepareOptionsMenu(menu)
+    override fun onPrepareMenu(menu: Menu) {
+        super.onPrepareMenu(menu)
         menu.findItem(R.id.ml_menu_sortby).isVisible = false
         menu.findItem(R.id.ml_menu_display_options).isVisible = true
     }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+    override fun onMenuItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.ml_menu_display_options -> {
                 //filter all sorts and keep only applicable ones
@@ -220,7 +220,7 @@ class PlaylistFragment : BaseAudioBrowser<PlaylistsViewModel>(), SwipeRefreshLay
                         .show(requireActivity().supportFragmentManager, "DisplaySettingsDialog")
                 true
             }
-            else -> super.onOptionsItemSelected(item)
+            else -> super.onMenuItemSelected(item)
         }
     }
 

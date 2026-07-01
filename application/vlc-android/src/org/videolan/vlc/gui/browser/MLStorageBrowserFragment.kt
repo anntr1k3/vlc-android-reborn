@@ -185,8 +185,8 @@ class MLStorageBrowserFragment : BaseFragment(), IStorageFragmentDelegate by Sto
         }
     }
 
-    override fun onPrepareOptionsMenu(menu: Menu) {
-        super.onPrepareOptionsMenu(menu)
+    override fun onPrepareMenu(menu: Menu) {
+        super.onPrepareMenu(menu)
 
         val onboarding = arguments?.getBoolean(FROM_ONBOARDING, false) == true
         menu.findItem(R.id.ml_menu_custom_dir)?.isVisible = !onboarding
@@ -194,7 +194,7 @@ class MLStorageBrowserFragment : BaseFragment(), IStorageFragmentDelegate by Sto
         menu.findItem(R.id.ml_menu_add_playlist)?.isVisible = false
     }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+    override fun onMenuItemSelected(item: MenuItem): Boolean {
         if (item.itemId == R.id.ml_menu_custom_dir) {
             showAddDirectoryDialog()
             return true

@@ -138,19 +138,19 @@ class HistoryFragment : MediaBrowserFragment<HistoryModel>(), IRefreshable, IHis
     }
 
 
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+    override fun onCreateMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.fragment_option_history, menu)
-        super.onCreateOptionsMenu(menu, inflater)
+        super.onCreateMenu(menu, inflater)
         cleanMenuItem = menu.findItem(R.id.ml_menu_clean)
         cleanMenuItem.isVisible = !isEmpty()
     }
 
-    override fun onPrepareOptionsMenu(menu: Menu) {
+    override fun onPrepareMenu(menu: Menu) {
         menu.findItem(R.id.ml_menu_clean).isVisible = Settings.getInstance(requireActivity()).getBoolean(PLAYBACK_HISTORY, true)
-        super.onPrepareOptionsMenu(menu)
+        super.onPrepareMenu(menu)
     }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+    override fun onMenuItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.ml_menu_clean -> {
 
@@ -158,7 +158,7 @@ class HistoryFragment : MediaBrowserFragment<HistoryModel>(), IRefreshable, IHis
                 dialog.show((activity as FragmentActivity).supportFragmentManager, RenameDialog::class.simpleName)
                 true
             }
-            else -> super.onOptionsItemSelected(item)
+            else -> super.onMenuItemSelected(item)
         }
     }
 

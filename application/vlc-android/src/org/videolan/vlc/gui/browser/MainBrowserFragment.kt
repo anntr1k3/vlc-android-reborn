@@ -136,8 +136,8 @@ class MainBrowserFragment : BaseFragment(), View.OnClickListener, CtxActionRecei
         return true
     }
 
-    override fun onPrepareOptionsMenu(menu: Menu) {
-        super.onPrepareOptionsMenu(menu)
+    override fun onPrepareMenu(menu: Menu) {
+        super.onPrepareMenu(menu)
 
         menu.findItem(R.id.ml_menu_display_grid).isVisible = displayInList
         menu.findItem(R.id.ml_menu_display_list).isVisible = !displayInList
@@ -146,7 +146,7 @@ class MainBrowserFragment : BaseFragment(), View.OnClickListener, CtxActionRecei
         menu.findItem(R.id.browse_network)?.isChecked = Settings.getInstance(requireActivity()).getBoolean(KEY_BROWSE_NETWORK, true)
     }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+    override fun onMenuItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.ml_menu_display_list, R.id.ml_menu_display_grid -> {
                 displayInList = item.itemId == R.id.ml_menu_display_list
@@ -176,7 +176,7 @@ class MainBrowserFragment : BaseFragment(), View.OnClickListener, CtxActionRecei
                 showAddServerDialog(null)
                 true
             }
-            else -> super.onOptionsItemSelected(item)
+            else -> super.onMenuItemSelected(item)
         }
     }
 

@@ -222,8 +222,8 @@ abstract class MediaBrowserFragment<T : SortableModel> : BaseFragment(), Filtera
         if (isAdded) UiTools.snacker(requireActivity(), getString(R.string.msg_delete_failed, item.title))
     }
 
-    override fun onPrepareOptionsMenu(menu: Menu) {
-        super.onPrepareOptionsMenu(menu)
+    override fun onPrepareMenu(menu: Menu) {
+        super.onPrepareMenu(menu)
         (viewModel as? MedialibraryViewModel)?.prepareOptionsMenu(menu)
         sortMenuTitles()
     }
@@ -232,7 +232,7 @@ abstract class MediaBrowserFragment<T : SortableModel> : BaseFragment(), Filtera
         menu?.let { (viewModel as? MedialibraryViewModel)?.sortMenuTitles(it, index) }
     }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+    override fun onMenuItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.ml_menu_sortby_name -> {
                 sortBy(Medialibrary.SORT_ALPHA)
@@ -272,9 +272,9 @@ abstract class MediaBrowserFragment<T : SortableModel> : BaseFragment(), Filtera
             }
             R.id.ml_menu_sortby_number -> {
                 sortBy(Medialibrary.SORT_FILESIZE) //TODO
-                return super.onOptionsItemSelected(item)
+                return super.onMenuItemSelected(item)
             }
-            else -> return super.onOptionsItemSelected(item)
+            else -> return super.onMenuItemSelected(item)
         }
     }
 

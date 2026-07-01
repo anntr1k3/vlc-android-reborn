@@ -307,7 +307,7 @@ class AudioBrowserFragment : BaseAudioBrowser<AudioBrowserViewModel>() {
         fabPlay?.contentDescription = getString(R.string.shuffle_play)
     }
 
-    override fun onPrepareOptionsMenu(menu: Menu) {
+    override fun onPrepareMenu(menu: Menu) {
         menu.findItem(R.id.ml_menu_last_playlist)?.isVisible = settings.contains(KEY_AUDIO_LAST_PLAYLIST)
         (viewModel.providers[currentTab]).run {
             menu.findItem(R.id.ml_menu_sortby).isVisible = false
@@ -318,7 +318,7 @@ class AudioBrowserFragment : BaseAudioBrowser<AudioBrowserViewModel>() {
          if (requireActivity().isTalkbackIsEnabled()) menu.findItem(R.id.shuffle_all).isVisible = true
    }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+    override fun onMenuItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.shuffle_all -> {
                 onFabPlayClick(binding.audioEmptyLoading)
@@ -344,7 +344,7 @@ class AudioBrowserFragment : BaseAudioBrowser<AudioBrowserViewModel>() {
                         .show(requireActivity().supportFragmentManager, "DisplaySettingsDialog")
                 true
             }
-            else -> super.onOptionsItemSelected(item)
+            else -> super.onMenuItemSelected(item)
         }
     }
 

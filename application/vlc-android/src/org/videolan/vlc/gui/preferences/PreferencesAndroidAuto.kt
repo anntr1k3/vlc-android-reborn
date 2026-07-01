@@ -27,7 +27,10 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
+import android.view.View
 import androidx.core.content.edit
+import androidx.core.view.MenuProvider
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.preference.Preference
 import kotlinx.coroutines.Dispatchers
@@ -40,7 +43,7 @@ import org.videolan.vlc.gui.dialogs.AboutVersionDialog
 import org.videolan.vlc.gui.dialogs.AutoInfoDialog
 import java.lang.NumberFormatException
 
-class PreferencesAndroidAuto : BasePreferenceFragment(), SharedPreferences.OnSharedPreferenceChangeListener {
+class PreferencesAndroidAuto : BasePreferenceFragment(), SharedPreferences.OnSharedPreferenceChangeListener, MenuProvider {
 
     private lateinit var settings: SharedPreferences
 
@@ -50,9 +53,13 @@ class PreferencesAndroidAuto : BasePreferenceFragment(), SharedPreferences.OnSha
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setHasOptionsMenu(true)
         preferenceScreen.sharedPreferences!!.registerOnSharedPreferenceChangeListener(this)
         updatePassThroughSummary()
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        requireActivity().addMenuProvider(this, viewLifecycleOwner, Lifecycle.State.RESUMED)
     }
 
     private fun updatePassThroughSummary() {
@@ -66,20 +73,19 @@ class PreferencesAndroidAuto : BasePreferenceFragment(), SharedPreferences.OnSha
         settings = Settings.getInstance(requireActivity())
     }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if (item.itemId == R.id.menu_android_auto_info)
+    override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
+        return if (menuItem.itemId == R.id.menu_android_auto_info) {
             AutoInfoDialog.newInstance().show(requireActivity().supportFragmentManager, "AutoInfoDialog")
-        return super.onOptionsItemSelected(item)
+            true
+        } else false
     }
 
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        menu.findItem(R.id.menu_android_auto_info).isVisible = true
-        super.onCreateOptionsMenu(menu, inflater)
+    override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
+        menu.findItem(R.id.menu_android_auto_info)?.isVisible = true
     }
 
-    override fun onPrepareOptionsMenu(menu: Menu) {
-        menu.findItem(R.id.menu_android_auto_info).isVisible = true
-        super.onPrepareOptionsMenu(menu)
+    override fun onPrepareMenu(menu: Menu) {
+        menu.findItem(R.id.menu_android_auto_info)?.isVisible = true
     }
 
     override fun onPreferenceTreeClick(preference: Preference): Boolean {

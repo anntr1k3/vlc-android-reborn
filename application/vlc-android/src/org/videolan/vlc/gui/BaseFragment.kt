@@ -6,13 +6,17 @@ import android.graphics.Color
 import android.os.Bundle
 import android.util.TypedValue
 import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import android.view.MotionEvent
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.view.ActionMode
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.os.bundleOf
+import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import kotlinx.coroutines.Job
@@ -28,7 +32,7 @@ import org.videolan.vlc.gui.helpers.FloatingActionButtonBehavior
 import org.videolan.vlc.gui.helpers.UiTools.isTablet
 import org.videolan.vlc.gui.view.SwipeRefreshLayout
 
-abstract class BaseFragment : Fragment(), ActionMode.Callback {
+abstract class BaseFragment : Fragment(), ActionMode.Callback, MenuProvider {
     var actionMode: ActionMode? = null
     var fabPlay: FloatingActionButton? = null
     lateinit var swipeRefreshLayout: SwipeRefreshLayout
@@ -57,12 +61,17 @@ abstract class BaseFragment : Fragment(), ActionMode.Callback {
     abstract fun getTitle(): String
     open fun onFabPlayClick(view: View) {}
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setHasOptionsMenu(true)
-    }
+    // MenuProvider — subclasses override these (with super-chaining) instead of the deprecated
+    // Fragment onCreateOptionsMenu / onPrepareOptionsMenu / onOptionsItemSelected.
+    override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {}
+    override fun onPrepareMenu(menu: Menu) {}
+    override fun onMenuItemSelected(menuItem: MenuItem): Boolean = false
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        // Replaces the deprecated setHasOptionsMenu(true): the fragment contributes menu items only
+        // while its view is RESUMED, so the visible tab owns the menu (no duplication across tabs).
+        requireActivity().addMenuProvider(this, viewLifecycleOwner, Lifecycle.State.RESUMED)
         view.findViewById<SwipeRefreshLayout>(R.id.swipeLayout)?.let {
             swipeRefreshLayout = it
             val a: TypedArray = requireActivity().obtainStyledAttributes(TypedValue().data, intArrayOf(R.attr.colorPrimary, R.attr.swipe_refresh_background))
