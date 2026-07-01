@@ -7,6 +7,7 @@ import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.provider.DocumentsContract
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.core.net.toUri
@@ -26,6 +27,10 @@ import org.videolan.vlc.util.FileUtils
 class WriteExternalDelegate : BaseHeadlessFragment() {
     private var storage : String? = null
 
+    private val storageAccessResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+        onStorageAccessResult(result.resultCode, result.data)
+    }
+
     @TargetApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,7 +47,7 @@ class WriteExternalDelegate : BaseHeadlessFragment() {
                     if (!isAdded || isDetached) return@setPositiveButton
                     val intent = Intent(Intent.ACTION_OPEN_DOCUMENT_TREE)
                     storage = arguments?.getString(KEY_STORAGE_PATH)?.apply { intent.putExtra(DocumentsContract.EXTRA_INITIAL_URI, toUri()) }
-                    startActivityForResult(intent, REQUEST_CODE_STORAGE_ACCESS)
+                    storageAccessResult.launch(intent)
                 }
                 .setNeutralButton(getString(R.string.dialog_sd_wizard)) { _, _ -> showHelpDialog() }.create().show()
     }
@@ -58,9 +63,8 @@ class WriteExternalDelegate : BaseHeadlessFragment() {
     }
 
     @TargetApi(Build.VERSION_CODES.KITKAT)
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if (data !== null && requestCode == REQUEST_CODE_STORAGE_ACCESS) {
+    private fun onStorageAccessResult(resultCode: Int, data: Intent?) {
+        if (data !== null) {
             if (resultCode == Activity.RESULT_OK) {
                 val context = context ?: return
                 val treeUri = data.data ?: return
@@ -94,7 +98,6 @@ class WriteExternalDelegate : BaseHeadlessFragment() {
     companion object {
         internal const val TAG = "VLC/WriteExternal"
         internal const val KEY_STORAGE_PATH = "VLC/storage_path"
-        private const val REQUEST_CODE_STORAGE_ACCESS = 42
 
         fun askForExtWrite(activity: FragmentActivity, uri: Uri, cb: Runnable? = null) {
             AppScope.launch {

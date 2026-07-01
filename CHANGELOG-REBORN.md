@@ -31,9 +31,17 @@ Migrated isolated, non-permission `startActivityForResult`/`onActivityResult` pa
 - PreferencesActivity: settings search result.
 - PreferencesAudio: soundfont file picker.
 - PreferencesAdvanced: restore-settings file picker.
-Deferred (need on-device validation): permission/OTG/SAF flows, restart-propagating
-results, and the MenuProvider + launchWhenStarted migrations (entangled with the
-fragment inheritance hierarchy / runtime lifecycle semantics).
+Deferred (need on-device validation): restart-propagating results and the MenuProvider
+migration (entangled with the fragment inheritance hierarchy).
+
+### Phase 1 — Medium migration (SAF/OTG storage-access to Activity Result API)
+Migrated the two remaining SAF document-tree flows off deprecated `startActivityForResult`/
+`onActivityResult` to `registerForActivityResult(StartActivityForResult())` (faithful 1:1,
+no semantic change): `OtgAccess` (OTG root grant) and `WriteExternalDelegate` (SD-card write
+grant). Launchers are registered as fragment properties (before STARTED). Note: the OTG/SD code
+paths can't be exercised on the emulator (no removable storage) — verified compile + no
+registration/crash regression on general navigation; the grant flows themselves still want a
+real-device check. Runtime *permission* requests were already on the Activity Result API.
 
 
 ### Project setup

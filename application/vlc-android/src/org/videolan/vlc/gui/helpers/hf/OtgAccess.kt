@@ -28,6 +28,7 @@ import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.WorkerThread
 import androidx.appcompat.app.AlertDialog
 import androidx.documentfile.provider.DocumentFile
@@ -37,13 +38,17 @@ import org.videolan.medialibrary.MLServiceLocator
 import org.videolan.medialibrary.interfaces.media.MediaWrapper
 import org.videolan.vlc.R
 
-const val SAF_REQUEST = 85
 const val TAG = "OtgAccess"
 
 const val OTG_SCHEME = "otg"
 
 @TargetApi(Build.VERSION_CODES.LOLLIPOP)
 class OtgAccess : BaseHeadlessFragment() {
+
+    private val safResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+        result.data?.let { otgRoot.value = it.data }
+        exit()
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -56,7 +61,7 @@ class OtgAccess : BaseHeadlessFragment() {
                     .setPositiveButton(R.string.ok) { _, _ ->
                         val safIntent = Intent(Intent.ACTION_OPEN_DOCUMENT_TREE)
                         try {
-                            startActivityForResult(safIntent, SAF_REQUEST)
+                            safResult.launch(safIntent)
                         } catch (e: ActivityNotFoundException) {
                             exit()
                         }
@@ -67,12 +72,6 @@ class OtgAccess : BaseHeadlessFragment() {
                     }
                     .show()
         }
-    }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, intent: Intent?) {
-        if (intent != null && requestCode == SAF_REQUEST) otgRoot.value = intent.data
-        else super.onActivityResult(requestCode, resultCode, intent)
-        exit()
     }
 
     companion object {
