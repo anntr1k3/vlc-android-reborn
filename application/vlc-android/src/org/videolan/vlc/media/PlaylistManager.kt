@@ -635,7 +635,7 @@ class PlaylistManager(val service: PlaybackService) : MediaWrapperList.EventList
     @MainThread
     override fun onItemAdded(index: Int, mrl: String) {
         if (BuildConfig.DEBUG) Log.i(TAG, "CustomMediaListItemAdded")
-        if (currentIndex >= index && !expanding) ++currentIndex
+        currentIndex = PlaylistIndexResolver.afterItemAdded(currentIndex, index, expanding)
         addUpdateActor.trySend(Unit)
     }
 
@@ -652,15 +652,14 @@ class PlaylistManager(val service: PlaybackService) : MediaWrapperList.EventList
     override fun onItemRemoved(index: Int, mrl: String) {
         if (BuildConfig.DEBUG) Log.i(TAG, "CustomMediaListItemDeleted")
         val currentRemoved = currentIndex == index
-        if (currentIndex >= index && !expanding) --currentIndex
+        currentIndex = PlaylistIndexResolver.afterItemRemoved(currentIndex, index, expanding)
         launch {
             determinePrevAndNextIndices()
-            if (currentRemoved && !expanding) {
-                when {
-                    nextIndex != -1 -> next()
-                    currentIndex != -1 -> playIndex(currentIndex, 0)
-                    else -> stop()
-                }
+            when (PlaylistIndexResolver.afterCurrentItemRemoved(currentRemoved, expanding, currentIndex, nextIndex)) {
+                PlaylistIndexResolver.RemovedCurrentAction.PlayNext -> next()
+                PlaylistIndexResolver.RemovedCurrentAction.PlayCurrent -> playIndex(currentIndex, 0)
+                PlaylistIndexResolver.RemovedCurrentAction.Stop -> stop()
+                PlaylistIndexResolver.RemovedCurrentAction.None -> Unit
             }
             executeUpdate()
             saveMediaList()
@@ -851,15 +850,7 @@ class PlaylistManager(val service: PlaybackService) : MediaWrapperList.EventList
 
     override fun onItemMoved(indexBefore: Int, indexAfter: Int, mrl: String) {
         if (BuildConfig.DEBUG) Log.i(TAG, "CustomMediaListItemMoved")
-        when (currentIndex) {
-            indexBefore -> {
-                currentIndex = indexAfter
-                if (indexAfter > indexBefore)
-                    --currentIndex
-            }
-            in indexAfter until indexBefore -> ++currentIndex
-            in (indexBefore + 1) until indexAfter -> --currentIndex
-        }
+        currentIndex = PlaylistIndexResolver.afterItemMoved(currentIndex, indexBefore, indexAfter)
 
         // If we are in random mode, we completely reset the stored previous track
         // as their indices changed.
@@ -884,17 +875,13 @@ class PlaylistManager(val service: PlaybackService) : MediaWrapperList.EventList
             shuffling = shuffling and (size > 2)
 
             if (shuffling) {
-                if (!previous.isEmpty()) {
-                    prevIndex = previous.peek()
-                    while (!isValidPosition(prevIndex)) {
-                        previous.removeAt(previous.size - 1)
-                        if (previous.isEmpty()) {
-                            prevIndex = -1
-                            break
-                        }
-                        prevIndex = previous.peek()
-                    }
+                val validPrevious = PlaylistIndexResolver.validShuffleHistoryTop(previous, size)
+                if (validPrevious.size != previous.size) {
+                    previous.clear()
+                    previous.addAll(validPrevious)
                 }
+                prevIndex = validPrevious.lastOrNull() ?: -1
+
                 // If we've played all songs already in shuffle, then either
                 // reshuffle or stop (depending on RepeatType).
                 if (previous.size + 1 == size) {
@@ -911,12 +898,9 @@ class PlaylistManager(val service: PlaybackService) : MediaWrapperList.EventList
                 } while (nextIndex == currentIndex || previous.contains(nextIndex))
             } else {
                 // normal playback
-                if (currentIndex > 0) prevIndex = currentIndex - 1
-                nextIndex = when {
-                    currentIndex + 1 < size -> currentIndex + 1
-                    repeating.value == PlaybackStateCompat.REPEAT_MODE_NONE -> -1
-                    else -> 0
-                }
+                val indices = PlaylistIndexResolver.linearNavigation(currentIndex, size, repeating.value)
+                prevIndex = indices.previousIndex
+                nextIndex = indices.nextIndex
             }
         }
     }

@@ -25,7 +25,6 @@ import java.util.*
 
 class MediaWrapperList {
 
-    /* TODO: add locking */
     private val internalList = ArrayList<MediaWrapper>()
     private val eventListenerList = ArrayList<EventListener>()
     private var videoCount = 0
@@ -42,12 +41,14 @@ class MediaWrapperList {
         fun onItemMoved(indexBefore: Int, indexAfter: Int, mrl: String)
     }
 
-    @Synchronized
     fun add(media: MediaWrapper) {
-        internalList.add(media)
-        signalEventListeners(EVENT_ADDED, internalList.size - 1, -1, media.location)
-        if (media.type == MediaWrapper.TYPE_VIDEO)
-            ++videoCount
+        val event = synchronized(this) {
+            internalList.add(media)
+            if (media.type == MediaWrapper.TYPE_VIDEO)
+                ++videoCount
+            Event(EVENT_ADDED, internalList.size - 1, -1, media.location)
+        }
+        signalEventListeners(event)
     }
 
     @Synchronized
@@ -61,13 +62,13 @@ class MediaWrapperList {
         eventListenerList.remove(listener)
     }
 
-    @Synchronized
-    private fun signalEventListeners(event: Int, arg1: Int, arg2: Int, mrl: String) {
-        for (listener in eventListenerList) {
-            when (event) {
-                EVENT_ADDED -> listener.onItemAdded(arg1, mrl)
-                EVENT_REMOVED -> listener.onItemRemoved(arg1, mrl)
-                EVENT_MOVED -> listener.onItemMoved(arg1, arg2, mrl)
+    private fun signalEventListeners(event: Event) {
+        val listeners = synchronized(this) { ArrayList(eventListenerList) }
+        for (listener in listeners) {
+            when (event.type) {
+                EVENT_ADDED -> listener.onItemAdded(event.arg1, event.mrl)
+                EVENT_REMOVED -> listener.onItemRemoved(event.arg1, event.mrl)
+                EVENT_MOVED -> listener.onItemMoved(event.arg1, event.arg2, event.mrl)
             }
         }
     }
@@ -75,13 +76,16 @@ class MediaWrapperList {
     /**
      * Clear the media list. (remove all media)
      */
-    @Synchronized
     fun clear() {
-        // Signal to observers of media being deleted.
-        for (i in internalList.indices)
-            signalEventListeners(EVENT_REMOVED, i, -1, internalList[i].location)
-        internalList.clear()
-        videoCount = 0
+        val events = synchronized(this) {
+            val removed = internalList.mapIndexed { index, media ->
+                Event(EVENT_REMOVED, index, -1, media.location)
+            }
+            internalList.clear()
+            videoCount = 0
+            removed
+        }
+        events.forEach(::signalEventListeners)
     }
 
     @Synchronized
@@ -89,13 +93,16 @@ class MediaWrapperList {
         return position >= 0 && position < internalList.size
     }
 
-    @Synchronized
     fun insert(position: Int, media: MediaWrapper) {
         if (position < 0) return
-        internalList.add(position.coerceAtMost(internalList.size), media)
-        signalEventListeners(EVENT_ADDED, position, -1, media.location)
-        if (media.type == MediaWrapper.TYPE_VIDEO)
-            ++videoCount
+        val event = synchronized(this) {
+            val insertPosition = position.coerceAtMost(internalList.size)
+            internalList.add(insertPosition, media)
+            if (media.type == MediaWrapper.TYPE_VIDEO)
+                ++videoCount
+            Event(EVENT_ADDED, insertPosition, -1, media.location)
+        }
+        signalEventListeners(event)
     }
 
     /**
@@ -105,45 +112,53 @@ class MediaWrapperList {
      * @param endPosition end position
      * @throws IndexOutOfBoundsException
      */
-    @Synchronized
     fun move(startPosition: Int, endPosition: Int) {
-        if (!(isValid(startPosition)
-                        && endPosition >= 0 && endPosition <= internalList.size))
-            throw IndexOutOfBoundsException("Indexes out of range")
+        val event = synchronized(this) {
+            if (!(isValid(startPosition)
+                            && endPosition >= 0 && endPosition <= internalList.size))
+                throw IndexOutOfBoundsException("Indexes out of range")
 
-        val toMove = internalList[startPosition]
-        internalList.removeAt(startPosition)
-        if (startPosition >= endPosition)
-            internalList.add(endPosition, toMove)
-        else
-            internalList.add(endPosition - 1, toMove)
-        signalEventListeners(EVENT_MOVED, startPosition, endPosition, toMove.location)
-    }
-
-    @Synchronized
-    fun remove(position: Int) {
-        if (!isValid(position)) return
-        if (internalList[position].type == MediaWrapper.TYPE_VIDEO)
-            --videoCount
-        val uri = internalList[position].location
-        internalList.removeAt(position)
-        signalEventListeners(EVENT_REMOVED, position, -1, uri)
-    }
-
-    @Synchronized
-    fun remove(location: String) {
-        var i = 0
-        while (i < internalList.size) {
-            val uri = internalList[i].location
-            if (uri == location) {
-                if (internalList[i].type == MediaWrapper.TYPE_VIDEO)
-                    --videoCount
-                internalList.removeAt(i)
-                signalEventListeners(EVENT_REMOVED, i, -1, uri)
-                i--
-            }
-            ++i
+            val toMove = internalList[startPosition]
+            internalList.removeAt(startPosition)
+            if (startPosition >= endPosition)
+                internalList.add(endPosition, toMove)
+            else
+                internalList.add(endPosition - 1, toMove)
+            Event(EVENT_MOVED, startPosition, endPosition, toMove.location)
         }
+        signalEventListeners(event)
+    }
+
+    fun remove(position: Int) {
+        val event = synchronized(this) {
+            if (!isValid(position)) return
+            if (internalList[position].type == MediaWrapper.TYPE_VIDEO)
+                --videoCount
+            val uri = internalList[position].location
+            internalList.removeAt(position)
+            Event(EVENT_REMOVED, position, -1, uri)
+        }
+        signalEventListeners(event)
+    }
+
+    fun remove(location: String) {
+        val events = synchronized(this) {
+            val removed = ArrayList<Event>()
+            var i = 0
+            while (i < internalList.size) {
+                val uri = internalList[i].location
+                if (uri == location) {
+                    if (internalList[i].type == MediaWrapper.TYPE_VIDEO)
+                        --videoCount
+                    internalList.removeAt(i)
+                    removed.add(Event(EVENT_REMOVED, i, -1, uri))
+                    i--
+                }
+                ++i
+            }
+            removed
+        }
+        events.forEach(::signalEventListeners)
     }
 
     @Synchronized
@@ -198,4 +213,6 @@ class MediaWrapperList {
         private const val EVENT_REMOVED = 1
         private const val EVENT_MOVED = 2
     }
+
+    private data class Event(val type: Int, val arg1: Int, val arg2: Int, val mrl: String)
 }
