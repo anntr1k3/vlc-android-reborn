@@ -28,6 +28,7 @@ import androidx.databinding.ViewDataBinding
 import androidx.leanback.widget.ImageCardView
 import androidx.vectordrawable.graphics.drawable.VectorDrawableCompat
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -56,10 +57,18 @@ private var defaultImageWidth = 0
 private var defaultImageWidthTV = 0
 private const val TAG = "ImageLoader"
 
+private fun View.cancelPreviousImageJob() {
+    (getTag(R.id.image_job) as? Job)?.cancel()
+    setTag(R.id.image_job, null)
+}
+
 @MainThread
 @BindingAdapter(value = ["media", "imageWidth", "tv", "card"], requireAll = false)
 fun loadImage(v: View, item: MediaLibraryItem?, imageWidth: Int = 0, tv: Boolean = false, card: Boolean = false) {
-    if (item === null) return
+    if (item === null) {
+        v.cancelPreviousImageJob()
+        return
+    }
     v.tag = item.title
 
     if (item.itemType == MediaLibraryItem.TYPE_PLAYLIST || item.itemType == MediaLibraryItem.TYPE_GENRE) {
@@ -72,6 +81,7 @@ fun loadImage(v: View, item: MediaLibraryItem?, imageWidth: Int = 0, tv: Boolean
     val binding = DataBindingUtil.findBinding<ViewDataBinding>(v)
     val isMedia = item.itemType == MediaLibraryItem.TYPE_MEDIA
     if (!Settings.showVideoThumbs && ((isMedia && (item as MediaWrapper).type == MediaWrapper.TYPE_VIDEO) || item.itemType == MediaLibraryItem.TYPE_VIDEO_GROUP || item is Folder) ) {
+        v.cancelPreviousImageJob()
         updateImageView(UiTools.getDefaultVideoDrawable(v.context).bitmap, v, binding, tv = tv, card = card)
         return
     }
@@ -84,17 +94,25 @@ fun loadImage(v: View, item: MediaLibraryItem?, imageWidth: Int = 0, tv: Boolean
         else -> ThumbnailsProvider.getMediaCacheKey(isMedia, item, cacheWidth.toString())
     }
     val bitmap = if (cacheKey !== null) BitmapCache.getBitmapFromMemCache(cacheKey) else null
-    if (bitmap !== null) updateImageView(bitmap, v, binding, tv = tv, card = card)
-    else {
-        v.scope.takeIf { it.isActive }?.launch { getImage(v, findInLibrary(item, isMedia), binding, imageWidth, tv = tv, card = card) }
+    if (bitmap !== null) {
+        v.cancelPreviousImageJob()
+        updateImageView(bitmap, v, binding, tv = tv, card = card)
+    } else {
+        v.cancelPreviousImageJob()
+        val job = v.scope.takeIf { it.isActive }?.launch {
+            getImage(v, findInLibrary(item, isMedia), binding, imageWidth, tv = tv, card = card)
+        }
+        if (job != null) v.setTag(R.id.image_job, job)
     }
 }
 
 fun loadPlaylistImageWithWidth(v: ImageView, item: MediaLibraryItem?, imageWidth: Int, card: Boolean) {
     if (imageWidth == 0) return
     if (item == null) return
+    v.cancelPreviousImageJob()
     val binding = DataBindingUtil.findBinding<ViewDataBinding>(v)
-    v.scope.takeIf { it.isActive }?.launch { getPlaylistOrGenreImage(v, item, binding, imageWidth, card) }
+    val job = v.scope.takeIf { it.isActive }?.launch { getPlaylistOrGenreImage(v, item, binding, imageWidth, card) }
+    if (job != null) v.setTag(R.id.image_job, job)
 }
 
 fun getAudioIconDrawable(context: Context?, type: Int, big: Boolean = false): BitmapDrawable? = context?.let {
@@ -185,23 +203,27 @@ fun imageCardViewContent(v: View, content: String?) {
 
 @BindingAdapter(value = ["imageUri", "tv" ], requireAll = false)
 fun downloadIcon(v: View, imageUri: Uri?, tv: Boolean = true) {
+    v.cancelPreviousImageJob()
     if (isSchemeHttpOrHttps(imageUri?.scheme)) {
-        v.scope.takeIf { it.isActive }?.launch {
+        val job = v.scope.takeIf { it.isActive }?.launch {
             val image = HttpImageLoader.downloadBitmap(imageUri.toString())
             updateImageView(image, v, DataBindingUtil.findBinding(v), tv = tv)
         }
+        if (job != null) v.setTag(R.id.image_job, job)
     }
 }
 
 @BindingAdapter(value = ["imageUrl", "tv" ], requireAll = false)
 fun downloadIcon(v: View, imageUrl: String?, tv: Boolean = true) {
+    v.cancelPreviousImageJob()
     if (imageUrl.isNullOrEmpty()) return
     val imageUri = imageUrl.toUri()
     if (isSchemeHttpOrHttps(imageUri.scheme)) {
-        v.scope.takeIf { it.isActive }?.launch {
+        val job = v.scope.takeIf { it.isActive }?.launch {
             val image = HttpImageLoader.downloadBitmap(imageUri.toString())
             updateImageView(image, v, DataBindingUtil.findBinding(v), tv = tv)
         }
+        if (job != null) v.setTag(R.id.image_job, job)
     }
 }
 

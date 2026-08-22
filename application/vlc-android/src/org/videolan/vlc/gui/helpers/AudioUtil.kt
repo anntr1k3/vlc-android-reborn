@@ -152,6 +152,7 @@ object AudioUtil {
         if (options.outWidth > 0 && options.outHeight > 0) {
             options.inJustDecodeBounds = false
             options.inSampleSize = 1
+            options.inPreferredConfig = Bitmap.Config.RGB_565
 
             // Find the best decoding scale for the bitmap
             if (width > 0) {

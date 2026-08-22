@@ -13,6 +13,13 @@ For upstream changes, see [NEWS](NEWS) and the upstream repository
 
 ## Unreleased
 
+### Phase 2 — Performance (List scroll cancellation & memory optimization)
+- **ImageLoader Coroutine Job Cancellation**: Attached decode job tracking to target views via `R.id.image_job`. When views are recycled, rebound, or loaded from `BitmapCache`, stale decoding jobs on `Dispatchers.IO` are cancelled immediately (`cancelPreviousImageJob`), eliminating wasted CPU and memory spikes during fast fling/scroll through large libraries.
+- **RGB_565 Artwork Decoding**: Switched audio cover decoding in `AudioUtil.fetchCoverBitmap` to `Bitmap.Config.RGB_565`, reducing bitmap memory consumption on the heap by 50% (2 bytes/px instead of 4 bytes/px) with no perceptible quality loss for album art.
+
+### Phase 0 — Build & DevEx fixes
+- Added missing `junit:junit` test dependency to `application/television/build.gradle` to ensure `./gradlew testDebugUnitTest` and global test tasks pass out-of-the-box.
+
 ### Phase 1 — Medium migration (Fragment menus → MenuProvider)
 Migrated all Fragment menus off the deprecated `setHasOptionsMenu` / `onCreateOptionsMenu` /
 `onPrepareOptionsMenu` / `onOptionsItemSelected` APIs to the `MenuProvider` API:
