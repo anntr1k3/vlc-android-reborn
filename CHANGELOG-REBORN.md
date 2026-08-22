@@ -14,8 +14,9 @@ For upstream changes, see [NEWS](NEWS) and the upstream repository
 ## Unreleased
 
 ### Phase 3 — Minimalist UI & Typography (Zero Clutter)
-- **Audio Player Background Cleanup**: Replaced legacy skeuomorphic `deep_space_gradient` bitmap and overlapping dark gradient views (`top_gradient`, `bottom_gradient`) with clean, theme-adaptive surfaces (`?attr/background_default_darker` / OLED black), eliminating visual banding.
-- **Modern Typography & Cover Presentation**: Refined audio cover card corners and elevations, upgraded title typography to `sans-serif-medium` / `sans-serif` across `cover_media_switcher_item`, `styles.xml`, and list cards for high legibility and contemporary aesthetics.
+- **Audio & Main Screen Background Cleanup**: Replaced legacy skeuomorphic `deep_space_gradient` bitmap and overlapping dark gradient views (`top_gradient`, `bottom_gradient`) with clean, theme-adaptive surfaces (`?attr/background_default_darker` / `?attr/background_default`), eliminating visual banding across all screens.
+- **Modern Typography & Card Presentation**: Refined audio cover card corners and elevations (12-24dp), upgraded title typography to `sans-serif-medium` / `sans-serif` across `cover_media_switcher_item`, `styles.xml`, and list cards for high legibility and contemporary aesthetics.
+- **Intuitive Video Player Double-Tap Seeking**: Expanded double-tap rewind/fast-forward gesture detection zones in `VideoTouchDelegate.kt` from narrow 25% screen edges to natural 40% left/right touch zones for frictionless video seeking.
 
 ### Phase 2 — Performance (List scroll cancellation & memory optimization)
 - **ImageLoader Coroutine Job Cancellation**: Attached decode job tracking to target views via `R.id.image_job`. When views are recycled, rebound, or loaded from `BitmapCache`, stale decoding jobs on `Dispatchers.IO` are cancelled immediately (`cancelPreviousImageJob`), eliminating wasted CPU and memory spikes during fast fling/scroll through large libraries.

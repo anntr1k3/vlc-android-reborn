@@ -295,8 +295,8 @@ class VideoTouchDelegate(private val player: VideoPlayerActivity,
                         if (numberOfTaps > 1 && !player.isLocked) {
                             val range = (if (screenConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) screenConfig.xRange else screenConfig.yRange).toFloat()
                             when {
-                                (touchControls and TOUCH_FLAG_DOUBLE_TAP_SEEK != 0) && event.x < range / 4f -> seekDelta(-org.videolan.tools.Settings.videoDoubleTapJumpDelay * 1000)
-                                (touchControls and TOUCH_FLAG_DOUBLE_TAP_SEEK != 0) && event.x > range * 0.75 -> seekDelta(org.videolan.tools.Settings.videoDoubleTapJumpDelay * 1000)
+                                (touchControls and TOUCH_FLAG_DOUBLE_TAP_SEEK != 0) && event.x < range * 0.4f -> seekDelta(-org.videolan.tools.Settings.videoDoubleTapJumpDelay * 1000)
+                                (touchControls and TOUCH_FLAG_DOUBLE_TAP_SEEK != 0) && event.x > range * 0.6f -> seekDelta(org.videolan.tools.Settings.videoDoubleTapJumpDelay * 1000)
                                 else -> if (touchControls and TOUCH_FLAG_PLAY != 0) player.doPlayPause()
                             }
                         }
