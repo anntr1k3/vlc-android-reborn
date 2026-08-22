@@ -14,6 +14,7 @@ For upstream changes, see [NEWS](NEWS) and the upstream repository
 ## Unreleased
 
 ### Phase 3 — Minimalist UI & Typography (Zero Clutter)
+- **Video Player HUD & Tracks Dialog Typography**: Refined video title overlay, clock, and track section headers (`player_hud_right.xml`, `player_overlay_track_item.xml`) with `sans-serif-medium` and crisp drop-shadow rendering, dramatically improving readability over bright scenes.
 - **Settings Hierarchy Streamlining & Category Reorganization**: Reorganized root `preferences.xml` into clean, well-defined Material 3 categories (Playback & Interface, Media Library & Storage, Casting & Security, Advanced). Consolidated loose video options (`hardware_acceleration`, `screen_orientation`, `video_action_switch`) into `preferences_video.xml`, eliminating root clutter and preference duplication while preserving 100% of user settings and search indexing.
 - **Audio & Main Screen Background Cleanup**: Replaced legacy skeuomorphic `deep_space_gradient` bitmap and overlapping dark gradient views (`top_gradient`, `bottom_gradient`) with clean, theme-adaptive surfaces (`?attr/background_default_darker` / `?attr/background_default`), eliminating visual banding across all screens.
 - **Modern Typography & Card Presentation**: Refined audio cover card corners and elevations (12-24dp), upgraded title, equalizer frequency band labels (`equalizer_bar.xml`), and player timer typography (`VLC.Player.TimeText`) to `sans-serif-medium` / `sans-serif` for high legibility and contemporary aesthetics.
