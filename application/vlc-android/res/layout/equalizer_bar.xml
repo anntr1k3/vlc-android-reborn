@@ -39,6 +39,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
+            android:fontFamily="sans-serif-medium"
+            android:textColor="?attr/font_audio_light"
             android:text="16kHz"
             android:textSize="10sp"
             tools:ignore="HardcodedText" />
