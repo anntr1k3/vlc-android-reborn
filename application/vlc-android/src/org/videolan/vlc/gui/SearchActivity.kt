@@ -14,6 +14,9 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import org.videolan.medialibrary.interfaces.Medialibrary
 import org.videolan.medialibrary.media.MediaLibraryItem
 import org.videolan.medialibrary.media.SearchAggregate
@@ -31,6 +34,7 @@ open class SearchActivity : BaseActivity(), TextWatcher, TextView.OnEditorAction
     private lateinit var medialibrary: Medialibrary
     private lateinit var binding: SearchActivityBinding
     private val clickHandler = ClickHandler()
+    private var searchJob: Job? = null
     override fun getSnackAnchorView(overAudioPlayer:Boolean): View? = findViewById(android.R.id.content)
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -48,7 +52,7 @@ open class SearchActivity : BaseActivity(), TextWatcher, TextView.OnEditorAction
                 window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN)
                 binding.searchEditText.setText(query)
                 binding.searchEditText.setSelection(query.length)
-                performSearh(query)
+                performSearch(query, immediate = true)
             }
         }
         binding.searchEditText.addTextChangedListener(this)
@@ -56,8 +60,17 @@ open class SearchActivity : BaseActivity(), TextWatcher, TextView.OnEditorAction
         binding.audioEmptyLoading.state = EmptyLoadingState.NONE
     }
 
-    private fun performSearh(query: String?) {
-        if (query != null && query.isNotEmpty()) lifecycleScope.launchWhenStarted {
+    private fun performSearch(query: String?, immediate: Boolean = false) {
+        searchJob?.cancel()
+        if (query.isNullOrEmpty()) {
+            binding.searchAggregate = SearchAggregate()
+            binding.audioEmptyLoading.state = EmptyLoadingState.NONE
+            return
+        }
+        searchJob = lifecycleScope.launch {
+            if (!immediate) {
+                delay(150)
+            }
             val searchAggregate = getFromMl { search(query, Settings.includeMissing, false) }
             binding.searchAggregate = searchAggregate
             if (searchAggregate.isEmpty) {
@@ -91,15 +104,18 @@ open class SearchActivity : BaseActivity(), TextWatcher, TextView.OnEditorAction
     override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {}
 
     override fun afterTextChanged(s: Editable?) {
-        if (s == null || s.isEmpty())
-            binding.searchAggregate = SearchAggregate()
-        else
-            performSearh(s.toString())
+        val query = s?.toString()
+        if (query.isNullOrEmpty()) {
+            performSearch(null, immediate = true)
+        } else {
+            performSearch(query, immediate = false)
+        }
     }
 
     override fun onEditorAction(v: TextView?, actionId: Int, event: KeyEvent?): Boolean {
         if (actionId == EditorInfo.IME_ACTION_SEARCH) {
             UiTools.setKeyboardVisibility(binding.root, false)
+            performSearch(binding.searchEditText.text?.toString(), immediate = true)
             return true
         }
         return false

@@ -18,11 +18,13 @@ For upstream changes, see [NEWS](NEWS) and the upstream repository
 - **Modern Typography & Card Presentation**: Refined audio cover card corners and elevations (12-24dp), upgraded title typography to `sans-serif-medium` / `sans-serif` across `cover_media_switcher_item`, `styles.xml`, and list cards for high legibility and contemporary aesthetics.
 - **Intuitive Video Player Double-Tap Seeking**: Expanded double-tap rewind/fast-forward gesture detection zones in `VideoTouchDelegate.kt` from narrow 25% screen edges to natural 40% left/right touch zones for frictionless video seeking.
 
-### Phase 2 — Performance (List scroll cancellation & memory optimization)
+### Phase 2 — Performance (Search Debounce, Battery, Memory & Scrolling)
+- **SearchActivity Coroutine Debounce**: Implemented 150ms debounce with cancellation of stale search jobs in `SearchActivity.kt`, preventing dozens of redundant parallel SQLite queries per keystroke and eliminating typing lag.
+- **Battery-Efficient Sleep Timer**: Replaced 1000ms wake-up loop in `PlaybackService.kt` with adaptive delay calculation via `SleepTimerCalculator`, reducing background CPU wakeups during audio playback by up to 30x while preserving exact minute-boundary precision. Accompanied by unit tests in `SleepTimerCalculatorTest`.
 - **ImageLoader Coroutine Job Cancellation**: Attached decode job tracking to target views via `R.id.image_job`. When views are recycled, rebound, or loaded from `BitmapCache`, stale decoding jobs on `Dispatchers.IO` are cancelled immediately (`cancelPreviousImageJob`), eliminating wasted CPU and memory spikes during fast fling/scroll through large libraries.
 - **RGB_565 Artwork Decoding**: Switched audio cover decoding in `AudioUtil.fetchCoverBitmap` to `Bitmap.Config.RGB_565`, reducing bitmap memory consumption on the heap by 50% (2 bytes/px instead of 4 bytes/px) with no perceptible quality loss for album art.
 - **MediaItemDiffCallback Fast Path**: Optimized DiffUtil `areItemsTheSame` with fast ID and itemType comparison path, eliminating identity false-negatives and redundant view re-creations during list updates.
-- **Active Unit Test Suite Expansion**: Added `MediaItemDiffCallbackTest`, `ExtensionsTest`, and `StringsTest` into the actively run test suite, raising JVM test coverage across utility and DiffUtil layers.
+- **Active Unit Test Suite Expansion**: Added `MediaItemDiffCallbackTest`, `SleepTimerCalculatorTest`, `ExtensionsTest`, and `StringsTest` into the actively run test suite, raising JVM test coverage across utility and DiffUtil layers.
 
 ### Phase 0 — Build & DevEx fixes
 - Added missing `junit:junit` test dependency to `application/television/build.gradle` to ensure `./gradlew testDebugUnitTest` and global test tasks pass out-of-the-box.

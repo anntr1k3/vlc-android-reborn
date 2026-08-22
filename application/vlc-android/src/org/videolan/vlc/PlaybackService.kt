@@ -1979,21 +1979,23 @@ class PlaybackService : MediaBrowserServiceCompat(), LifecycleOwner, CoroutineSc
     }
 
     /**
-     * Start the loop that checks for the sleep timer consumption
+     * Start the loop that checks for the sleep timer consumption with adaptive delay
      */
     private fun startSleepTimerJob() {
         stopSleepTimerJob()
         sleepTimerJob = launch {
             while (isActive) {
-                playerSleepTime.value?.let {
-                    val timerExpired = System.currentTimeMillis() > it.timeInMillis
-                    val shouldStop = if (waitForMediaEnd) timerExpired && mediaEndReached else timerExpired
-                    if (shouldStop) {
-                        withContext(Dispatchers.Main) { if (isPlaying) stop() else setSleepTimer(null) }
+                val sleepTime = playerSleepTime.value ?: break
+                val now = System.currentTimeMillis()
+                if (org.videolan.vlc.util.SleepTimerCalculator.shouldStop(sleepTime.timeInMillis, now, waitForMediaEnd, mediaEndReached)) {
+                    withContext(Dispatchers.Main) {
+                        if (isPlaying) stop() else setSleepTimer(null)
                     }
+                    break
                 }
                 if (mediaEndReached) mediaEndReached = false
-                delay(1000)
+                val delayTime = org.videolan.vlc.util.SleepTimerCalculator.computeDelay(sleepTime.timeInMillis, now, waitForMediaEnd)
+                delay(delayTime)
             }
         }
     }
