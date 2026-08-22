@@ -13,6 +13,10 @@ For upstream changes, see [NEWS](NEWS) and the upstream repository
 
 ## Unreleased
 
+### Phase 3 — Minimalist UI & Typography (Zero Clutter)
+- **Audio Player Background Cleanup**: Replaced legacy skeuomorphic `deep_space_gradient` bitmap and overlapping dark gradient views (`top_gradient`, `bottom_gradient`) with clean, theme-adaptive surfaces (`?attr/background_default_darker` / OLED black), eliminating visual banding.
+- **Modern Typography & Cover Presentation**: Refined audio cover card corners and elevations, upgraded title typography to `sans-serif-medium` / `sans-serif` across `cover_media_switcher_item`, `styles.xml`, and list cards for high legibility and contemporary aesthetics.
+
 ### Phase 2 — Performance (List scroll cancellation & memory optimization)
 - **ImageLoader Coroutine Job Cancellation**: Attached decode job tracking to target views via `R.id.image_job`. When views are recycled, rebound, or loaded from `BitmapCache`, stale decoding jobs on `Dispatchers.IO` are cancelled immediately (`cancelPreviousImageJob`), eliminating wasted CPU and memory spikes during fast fling/scroll through large libraries.
 - **RGB_565 Artwork Decoding**: Switched audio cover decoding in `AudioUtil.fetchCoverBitmap` to `Bitmap.Config.RGB_565`, reducing bitmap memory consumption on the heap by 50% (2 bytes/px instead of 4 bytes/px) with no perceptible quality loss for album art.
