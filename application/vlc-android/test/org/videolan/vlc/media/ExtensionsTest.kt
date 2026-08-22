@@ -1,13 +1,15 @@
-package org.videolan.vlc.util
+package org.videolan.vlc.media
 
 import org.junit.Assert
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
+import org.videolan.vlc.util.generateResolutionClass
+import org.videolan.vlc.util.mergeSorted
 import java.util.Comparator
 
 @RunWith(JUnit4::class)
-class ExtensionsTests {
+class ExtensionsTest {
 
     @Test
     fun getResolutionClass() {
@@ -23,6 +25,7 @@ class ExtensionsTests {
         Assert.assertEquals("SD", generateResolutionClass(712, 480))
         Assert.assertEquals("SD", generateResolutionClass(716, 480))
     }
+
     @Test
     fun mergeLists() {
         val list1 = mutableListOf(1, 5, 8, 9)

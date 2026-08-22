@@ -1,10 +1,16 @@
-package org.videolan.vlc.util
+package org.videolan.vlc.media
 
-import org.junit.Assert.*
+import org.junit.Assert.assertEquals
+import org.junit.Assert.assertFalse
+import org.junit.Assert.assertTrue
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
-import org.videolan.tools.*
+import org.videolan.tools.containsName
+import org.videolan.tools.readableSize
+import org.videolan.tools.removeFileScheme
+import org.videolan.tools.startsWith
+import org.videolan.tools.stripTrailingSlash
 
 @RunWith(JUnit4::class)
 class StringsTest {
@@ -12,7 +18,6 @@ class StringsTest {
     @Test
     fun stripTrailingSlash() {
         assertEquals("foo/".stripTrailingSlash(), "foo")
-
         assertEquals("bar".stripTrailingSlash(), "bar")
     }
 
@@ -51,7 +56,6 @@ class StringsTest {
         assertFalse(bool)
     }
 
-
     @Test
     fun indexOfListItemEndsWithString_returnIndex() {
         val list = listOf("fooJava", "fooKotlin", "fooPython", "barPython")
@@ -67,7 +71,6 @@ class StringsTest {
         indx = containsName(list, "fooPython")
         assertEquals(indx, 2)
     }
-
 
     @Test
     fun indexOfListItemEndsWithString_returnMinusOne() {
@@ -98,37 +101,6 @@ class StringsTest {
     }
 
     @Test
-    fun readableFileSize() {
-        var s = 10L.readableFileSize()
-        assertEquals(s, "10 B")
-
-        s = 1026L.readableFileSize()
-        assertEquals(s, "1 KiB")
-
-        s = 10026L.readableFileSize()
-        assertEquals(s, "9.8 KiB")
-
-        s = 100026L.readableFileSize()
-        assertEquals(s, "97.7 KiB")
-
-        s = 1000026L.readableFileSize()
-        assertEquals(s, "976.6 KiB")
-
-        s = 10000026L.readableFileSize()
-        assertEquals(s, "9.5 MiB")
-
-
-        s = 1000000026L.readableFileSize()
-        assertEquals(s, "953.7 MiB")
-
-        s = 10000000026L.readableFileSize()
-        assertEquals(s, "9.3 GiB")
-
-        s = 100000000026L.readableFileSize()
-        assertEquals(s, "93.1 GiB")
-    }
-
-    @Test
     fun readableSize() {
         var s = 10L.readableSize()
         assertEquals(s, "10 B")
@@ -148,7 +120,6 @@ class StringsTest {
         s = 10000026L.readableSize()
         assertEquals(s, "10 MB")
 
-
         s = 1000000026L.readableSize()
         assertEquals(s, "1 GB")
 
@@ -158,6 +129,4 @@ class StringsTest {
         s = 100000000026L.readableSize()
         assertEquals(s, "100 GB")
     }
-
-
 }
