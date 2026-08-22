@@ -27,7 +27,10 @@ For upstream changes, see [NEWS](NEWS) and the upstream repository
 - **MediaItemDiffCallback Fast Path**: Optimized DiffUtil `areItemsTheSame` with fast ID and itemType comparison path, eliminating identity false-negatives and redundant view re-creations during list updates.
 - **Active Unit Test Suite Expansion**: Added `MediaItemDiffCallbackTest`, `SleepTimerCalculatorTest`, `ExtensionsTest`, and `StringsTest` into the actively run test suite, raising JVM test coverage across utility and DiffUtil layers.
 
+- **Release Coroutines Suspension Overhead Fix**: Wrapped global `DEBUG_PROPERTY_NAME` in `BuildConfig.DEBUG` in `AppSetupDelegate.kt`, preventing unnecessary stack-trace inspection and overhead on every coroutine suspension point in release builds.
+
 ### Phase 0 — Build & DevEx fixes
+- Added `org.gradle.caching=true` in `gradle.properties` for build task caching.
 - Added missing `junit:junit` test dependency to `application/television/build.gradle` to ensure `./gradlew testDebugUnitTest` and global test tasks pass out-of-the-box.
 
 ### Phase 1 — Medium migration (Fragment menus → MenuProvider)

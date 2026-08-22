@@ -72,7 +72,7 @@ class AppSetupDelegate : AppDelegate {
         // Service loaders
         FactoryManager.registerFactory(IMediaFactory.factoryId, MediaFactory())
         FactoryManager.registerFactory(ILibVLCFactory.factoryId, LibVLCFactory())
-        System.setProperty(DEBUG_PROPERTY_NAME, DEBUG_PROPERTY_VALUE_ON)
+        if (BuildConfig.DEBUG) System.setProperty(DEBUG_PROPERTY_NAME, DEBUG_PROPERTY_VALUE_ON)
 
         val settings = Settings.getInstance(this)
         //App restarted, leave the incognito mode
