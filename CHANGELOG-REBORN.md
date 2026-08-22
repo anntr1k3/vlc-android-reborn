@@ -15,7 +15,7 @@ For upstream changes, see [NEWS](NEWS) and the upstream repository
 
 ### Phase 3 — Minimalist UI & Typography (Zero Clutter)
 - **Audio & Main Screen Background Cleanup**: Replaced legacy skeuomorphic `deep_space_gradient` bitmap and overlapping dark gradient views (`top_gradient`, `bottom_gradient`) with clean, theme-adaptive surfaces (`?attr/background_default_darker` / `?attr/background_default`), eliminating visual banding across all screens.
-- **Modern Typography & Card Presentation**: Refined audio cover card corners and elevations (12-24dp), upgraded title typography to `sans-serif-medium` / `sans-serif` across `cover_media_switcher_item`, `styles.xml`, and list cards for high legibility and contemporary aesthetics.
+- **Modern Typography & Card Presentation**: Refined audio cover card corners and elevations (12-24dp), upgraded title and player timer typography (`VLC.Player.TimeText`) to `sans-serif-medium` / `sans-serif` across `cover_media_switcher_item`, `styles.xml`, and list cards for high legibility and contemporary aesthetics.
 - **Intuitive Video Player Double-Tap Seeking**: Expanded double-tap rewind/fast-forward gesture detection zones in `VideoTouchDelegate.kt` from narrow 25% screen edges to natural 40% left/right touch zones for frictionless video seeking.
 
 ### Phase 2 — Performance (Search Debounce, Battery, Memory & Scrolling)
