@@ -56,7 +56,7 @@
     <color name="action_mode_light">#fff3e0</color>
 
 
-    <color name="dark_background">#131313</color>
+    <color name="dark_background">#000000</color>
 
     <color name="playerbackground">#c0141414</color>
     <color name="playerbackground_invert">#c0ebebeb</color>

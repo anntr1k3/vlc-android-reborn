@@ -14,6 +14,7 @@ For upstream changes, see [NEWS](NEWS) and the upstream repository
 ## Unreleased
 
 ### Phase 3 — Minimalist UI & Typography (Zero Clutter)
+- **True AMOLED Black Surface Mode**: Updated `dark_background` to `#000000` (true pitch black) across `Theme.VLC.Black`, `background_default`, action bars, headers, and window backgrounds, turning OLED pixels completely off for maximum battery savings and infinite contrast.
 - **Homescreen Widgets Modern Typography**: Upgraded track title and artist typography across mini and macro home screen widgets (`widget_mini.xml`, `widget_macro.xml`) to `sans-serif-medium` and `sans-serif` for clean readability on Android launchers.
 - **Video Player HUD & Tracks Dialog Typography**: Refined video title overlay, clock, and track section headers (`player_hud_right.xml`, `player_overlay_track_item.xml`) with `sans-serif-medium` and crisp drop-shadow rendering, dramatically improving readability over bright scenes.
 - **Settings Hierarchy Streamlining & Category Reorganization**: Reorganized root `preferences.xml` into clean, well-defined Material 3 categories (Playback & Interface, Media Library & Storage, Casting & Security, Advanced). Consolidated loose video options (`hardware_acceleration`, `screen_orientation`, `video_action_switch`) into `preferences_video.xml`, eliminating root clutter and preference duplication while preserving 100% of user settings and search indexing.
