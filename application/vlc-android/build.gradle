@@ -30,6 +30,7 @@ android {
         resValue "string", "changelog", changelog()
         resValue "string", "dav1d_version", dav1dVersion()
         resValue 'string', 'tv_provider_authority', "${rootProject.ext.appId}.tv"
+        resValue 'string', 'tv_search_suggest_data', "content://${rootProject.ext.appId}.tv/media_database"
         buildConfigField 'String', 'LIBVLC_VERSION', "\"${rootProject.ext.libvlcVersion}\""
         buildConfigField 'String', 'ML_VERSION', "\"${rootProject.ext.medialibraryVersion}\""
         buildConfigField "String", "APP_ID", "\"${rootProject.ext.appId}\""
@@ -58,7 +59,14 @@ android {
             returnDefaultValues = true
         }
         unitTests.all {
-            jvmArgs '-noverify'
+            jvmArgs '-noverify',
+                    '--add-opens=java.base/java.lang=ALL-UNNAMED',
+                    '--add-opens=java.base/java.lang.reflect=ALL-UNNAMED',
+                    '--add-opens=java.base/java.util=ALL-UNNAMED',
+                    '--add-opens=java.base/java.io=ALL-UNNAMED',
+                    '--add-opens=java.base/java.net=ALL-UNNAMED',
+                    '--add-opens=java.base/java.text=ALL-UNNAMED',
+                    '--add-opens=java.desktop/java.awt.font=ALL-UNNAMED'
             testLogging {
                 events "passed", "skipped", "failed", "standardOut", "standardError"
                 outputs.upToDateWhen { false }
@@ -83,6 +91,7 @@ android {
             resValue 'string', 'benchmark_package_name', 'org.videolan.vlcbenchmark.debug'
             buildConfigField "String", "APP_ID", "\"${rootProject.ext.appId}.debug\""
             resValue 'string', 'tv_provider_authority', "${rootProject.ext.appId}.debug.tv"
+            resValue 'string', 'tv_search_suggest_data', "content://${rootProject.ext.appId}.debug.tv/media_database"
             buildConfigField "boolean", "NO_TV", "false"
             multiDexEnabled = true
         }

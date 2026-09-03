@@ -968,8 +968,6 @@
     <string name="share_track_info">Dela spårinformation</string>
     <string name="share_track">Lyssnar nu på %s</string>
     <string name="find_metadata">Hitta metadata</string>
-    <string name="moviepedia_hint">Sök metadata</string>
-    <string name="moviepedia_result">Videoresultat</string>
     <string name="directed_by">Regissör</string>
     <string name="casting">Rollsättare</string>
     <string name="produced_by">Producerad av</string>

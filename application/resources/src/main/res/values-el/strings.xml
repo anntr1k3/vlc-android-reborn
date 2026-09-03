@@ -963,8 +963,6 @@
     <string name="share_track_info">Διαμοιρασμός των πληροφοριών του κομματιού</string>
     <string name="share_track">Γίνεται ακρόαση του %s</string>
     <string name="find_metadata">Εύρεση μεταδεδομένων</string>
-    <string name="moviepedia_hint">Αναζήτηση μεταδεδομένων</string>
-    <string name="moviepedia_result">Αποτελέσματα βίντεο</string>
     <string name="directed_by">Σκηνοθεσία από</string>
     <string name="casting">Μετάδοση</string>
     <string name="produced_by">Παραγωγή από</string>

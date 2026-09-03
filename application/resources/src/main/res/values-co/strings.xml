@@ -966,8 +966,6 @@
     <string name="share_track_info">Sparte l’infurmazione di a traccia</string>
     <string name="share_track">Attualmente, si stà à sente %s</string>
     <string name="find_metadata">Truvà i metadati</string>
-    <string name="moviepedia_hint">Ricercà i metadati</string>
-    <string name="moviepedia_result">Risultati video</string>
     <string name="directed_by">Realizatu da</string>
     <string name="casting">Distribuzione</string>
     <string name="produced_by">Pruduttu da</string>

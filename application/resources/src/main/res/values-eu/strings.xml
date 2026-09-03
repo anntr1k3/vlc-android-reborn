@@ -877,8 +877,6 @@
     <string name="share_file">Partekatu %s</string>
     <string name="share_message">Hemen dago %s</string>
     <string name="find_metadata">Aurkitu metadatuak</string>
-    <string name="moviepedia_hint">Bilatu metadatuak</string>
-    <string name="moviepedia_result">Bideo emaitzak</string>
     <string name="directed_by">Zuzendaria</string>
     <string name="casting">Aktoreak</string>
     <string name="produced_by">Produktorea</string>

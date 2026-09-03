@@ -994,8 +994,6 @@
     <string name="share_track_info">Sdílet informaci o stopě</string>
     <string name="share_track">Právě posloucháte %s</string>
     <string name="find_metadata">Nalézt metadata</string>
-    <string name="moviepedia_hint">Hledat metadata</string>
-    <string name="moviepedia_result">Výsledky pro video</string>
     <string name="directed_by">Režie:</string>
     <string name="casting">Obsazení:</string>
     <string name="produced_by">Produkce:</string>

@@ -15,11 +15,11 @@ class PlaylistsViewModelTest : BaseTest() {
     override fun beforeTest() {
         super.beforeTest()
         StubDataSource.getInstance().resetData()
-        playlistsViewModel = PlaylistsViewModel(context)
+        playlistsViewModel = PlaylistsViewModel(context, org.videolan.medialibrary.interfaces.media.Playlist.Type.All)
     }
 
     private fun createDummyPlaylists(count: Int) {
-        (0 until count).map { mediaLibrary.createPlaylist("test$it") }
+        (0 until count).map { mediaLibrary.createPlaylist("test$it", true, false) }
     }
 
     @Test

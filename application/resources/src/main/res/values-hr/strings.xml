@@ -560,8 +560,6 @@
     <string name="invalid_file">Neispravna datoteka. Ne može se dijeliti.</string>
     <string name="share_file">Dijeli %s</string>
     <string name="find_metadata">Pronađi metapodatke</string>
-    <string name="moviepedia_hint">Traži metapodatke</string>
-    <string name="moviepedia_result">Rezultati videa</string>
     <string name="directed_by">Režija</string>
     <string name="casting">Casting</string>
     <string name="produced_by">Proizvodnja</string>

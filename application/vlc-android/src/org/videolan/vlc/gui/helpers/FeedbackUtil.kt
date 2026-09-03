@@ -168,7 +168,7 @@ object FeedbackUtil {
             "unknown"
         } ?: "unknown"
         return when (installerInfo) {
-            "com.android.vending" -> Pair ("https://play.google.com/store/apps/details?id=org.videolan.vlc", "Google Play")
+            "com.android.vending" -> Pair ("https://play.google.com/store/apps/details?id=${BuildConfig.APP_ID}", "Google Play")
             "com.amazon.venezia" -> Pair ("https://www.amazon.fr/VLC-Mobile-Team-for-Fire/dp/B00U65KQMQ", "Amazon AppStore")
             "com.huawei.appmarket" -> Pair ("https://appgallery.huawei.com/#/app/C101924579", "Huawei AppGallery")
             else -> null

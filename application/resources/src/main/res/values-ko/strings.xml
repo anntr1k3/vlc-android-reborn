@@ -956,8 +956,6 @@
     <string name="share_track_info">트랙 정보 공유</string>
     <string name="share_track">트랙 공유</string>
     <string name="find_metadata">메타데이터 찾기</string>
-    <string name="moviepedia_hint">메타데이터 검색</string>
-    <string name="moviepedia_result">동영상 결과</string>
     <string name="directed_by">감독</string>
     <string name="casting">캐스팅</string>
     <string name="produced_by">프로듀서</string>

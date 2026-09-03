@@ -918,8 +918,6 @@
     <string name="share_track_info">Bendrinti takelio informaciją</string>
     <string name="share_track">Šiuo metu klausausi: „%s“.</string>
     <string name="find_metadata">Rasti „meta“ žymenis</string>
-    <string name="moviepedia_hint">Ieškoti „meta“ žymių</string>
-    <string name="moviepedia_result">Paieškos rezultatai</string>
     <string name="directed_by">Režisierius</string>
     <string name="casting">Aktorių kolektyvas</string>
     <string name="produced_by">Išleista</string>

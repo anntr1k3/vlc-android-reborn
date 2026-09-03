@@ -968,8 +968,6 @@
     <string name="share_track_info">Die Titel-Informationen teilen</string>
     <string name="share_track">Derzeit höre ich %s</string>
     <string name="find_metadata">Metadaten finden</string>
-    <string name="moviepedia_hint">Metadaten suchen</string>
-    <string name="moviepedia_result">Video-Ergebnisse</string>
     <string name="directed_by">Unter der Regie von</string>
     <string name="casting">Besetzung</string>
     <string name="produced_by">Produziert von</string>

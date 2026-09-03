@@ -30,8 +30,8 @@ import org.videolan.vlc.gui.dialogs.SubtitleItem
 
 object TestUtil {
     private const val fakeUri: String = "https://www.videolan.org/fake_"
-    private const val fakeSubUri: String = "/storage/emulated/0/Android/data/org.videolan.vlc.debug/files/subs/"
-    private const val fakeMediaUri: String = "/storage/emulated/0/Android/data/org.videolan.vlc.debug/files/media/"
+    private const val fakeSubUri: String = "/storage/emulated/0/Android/data/org.videolan.vlc.reborn.debug/files/subs/"
+    private const val fakeMediaUri: String = "/storage/emulated/0/Android/data/org.videolan.vlc.reborn.debug/files/media/"
 
     fun createLocalFav(uri: Uri, title: String, iconUrl: String?): org.videolan.vlc.mediadb.models.BrowserFav {
         return org.videolan.vlc.mediadb.models.BrowserFav(uri, TYPE_LOCAL_FAV, title, iconUrl)

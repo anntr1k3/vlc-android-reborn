@@ -901,8 +901,6 @@
     <string name="share_track_info">Kongsi maklumat trek</string>
     <string name="share_track">Buat masa ini mendengar %s</string>
     <string name="find_metadata">Cari metadata</string>
-    <string name="moviepedia_hint">Gelintar metadata</string>
-    <string name="moviepedia_result">Keputusan video</string>
     <string name="directed_by">Diarah oleh</string>
     <string name="casting">Lakonan</string>
     <string name="produced_by">Dihasilkan oleh</string>

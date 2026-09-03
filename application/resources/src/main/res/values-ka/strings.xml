@@ -962,8 +962,6 @@
     <string name="share_track_info">ჩანაწერის მონაცემების გაზიარება</string>
     <string name="share_track">ამჟამად ისმინება %s</string>
     <string name="find_metadata">თანმხლები მონაცემების პოვნა</string>
-    <string name="moviepedia_hint">თანმხლები მონაცემების ძიება</string>
-    <string name="moviepedia_result">ვიდეოს შედეგები</string>
     <string name="directed_by">რეჟისორი</string>
     <string name="casting">გადაცემა</string>
     <string name="produced_by">მწარმოებელი</string>

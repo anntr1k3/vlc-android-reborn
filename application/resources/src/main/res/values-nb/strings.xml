@@ -787,8 +787,6 @@
     <string name="share_message">Her er %s</string>
     <string name="share_track">Hører for øyeblikket på %s</string>
     <string name="find_metadata">Finn metadata</string>
-    <string name="moviepedia_hint">Søk i metadata</string>
-    <string name="moviepedia_result">Videoresultater</string>
     <string name="directed_by">Regisert av</string>
     <string name="casting">Rollebesetning</string>
     <string name="produced_by">Produsert av</string>

@@ -968,8 +968,6 @@
     <string name="share_track_info">Sávinformáció megosztása</string>
     <string name="share_track">Jelenleg ezt hallgatja: %s</string>
     <string name="find_metadata">Metaadatok keresése</string>
-    <string name="moviepedia_hint">Metaadatok keresése</string>
-    <string name="moviepedia_result">Videótalálatok</string>
     <string name="directed_by">Rendezte:</string>
     <string name="casting">Szereposztás</string>
     <string name="produced_by">Producer:</string>

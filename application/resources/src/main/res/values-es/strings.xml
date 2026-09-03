@@ -624,8 +624,6 @@
     <string name="share_file">Compartir %s</string>
     <string name="share_message">Aquí está %s</string>
     <string name="find_metadata">Buscar metadatos</string>
-    <string name="moviepedia_hint">Buscar metadados</string>
-    <string name="moviepedia_result">Resultados de vídeo</string>
     <string name="directed_by">Dirigida por</string>
     <string name="casting">Reparto</string>
     <string name="produced_by">Producida por</string>

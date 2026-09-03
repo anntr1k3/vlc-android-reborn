@@ -586,8 +586,6 @@
     <string name="share_file">แชร์ %s</string>
     <string name="share_message">ที่นี่คือ %s</string>
     <string name="find_metadata">ค้นหาข้อมูลกำกับ</string>
-    <string name="moviepedia_hint">ค้นหาข้อมูลกำกับ</string>
-    <string name="moviepedia_result">ผลลัพธ์วิดีโอ</string>
     <string name="directed_by">กำกับโดย</string>
     <string name="casting">นักแสดง</string>
     <string name="produced_by">ผลิตโดย</string>

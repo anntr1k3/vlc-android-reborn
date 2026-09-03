@@ -975,8 +975,6 @@
     <string name="share_track_info">Partilhar a informação da faixa</string>
     <string name="share_track">Atualmente a ouvir %s</string>
     <string name="find_metadata">Encontrar metadados</string>
-    <string name="moviepedia_hint">Pesquisar metadados</string>
-    <string name="moviepedia_result">Resultados de vídeo</string>
     <string name="directed_by">Realizado por</string>
     <string name="casting">Seleção de intérpretes</string>
     <string name="produced_by">Produzido por</string>

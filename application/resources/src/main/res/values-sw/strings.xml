@@ -760,8 +760,6 @@
     <string name="share_file">Shiriki %s</string>
     <string name="share_message">%s ndio hii</string>
     <string name="find_metadata">Tafuta datameta</string>
-    <string name="moviepedia_hint">Tafuta datameta</string>
-    <string name="moviepedia_result">Video zilizopatikana</string>
     <string name="directed_by">Imeendeshwa na</string>
     <string name="casting">Waigizaji</string>
     <string name="produced_by">Imetolewa na</string>

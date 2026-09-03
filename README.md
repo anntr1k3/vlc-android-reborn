@@ -28,6 +28,8 @@ Download the latest ready-to-install Android APK directly from our GitHub Releas
 
 👉 **[Download Latest VLC Android Reborn APK](https://github.com/anntr1k3/vlc-android-reborn/releases)**
 
+The installable package is `org.videolan.vlc.reborn`, so it can be installed next to official VLC. It will not update an existing `org.videolan.vlc` install.
+
 ---
 
 ## ⚡ Key Improvements in Reborn
@@ -38,18 +40,16 @@ Download the latest ready-to-install Android APK directly from our GitHub Releas
 * **Modern Typography**: Clear, legible `sans-serif-medium` typography across video player HUD, timer overlays, track titles, equalizer bands, and home screen widgets.
 
 ### 🚀 2. Peak Performance & 120 FPS Scrolling
-* **Zero-Relayout Mini-Player Gestures**: Bottom-sheet sliding animations run purely on GPU transforms (`scaleY`/`alpha`), eliminating UI thread layout thrashing (`requestLayout()`) for silky 60/120 FPS transitions.
+* **Zero-Relayout Mini-Player Gestures**: Bottom-sheet sliding animations run on GPU transforms (`scaleY`/`alpha`) during the gesture, then hide the 4dp progress bar with `View.GONE` when fully expanded so the header is not pinned to empty space.
 * **Stale Job Cancellation in Lists (`ImageLoader`)**: Fast flinging through large media libraries instantly cancels background decode jobs for off-screen items, preventing CPU spikes and memory bloat.
-* **50% RAM Reduction for Artwork (`RGB_565`)**: Cover bitmap decoding uses 2 bytes/pixel with no perceptible quality loss, freeing up memory on large libraries.
 * **Instant Search with Debounce**: 150ms keystroke debounce prevents SQLite lock contention during search queries.
 * **Preallocated Batch Loading**: Pre-allocates exact list capacities in `MedialibraryProvider`, avoiding garbage collection pauses during large queue initialization (10k+ tracks).
 
 ### 🔋 3. Battery Efficiency & Smart Engine
-* **Adaptive Sleep Timer**: Replaced legacy 1000ms periodic CPU wakeups with an adaptive delay algorithm, reducing CPU wakeups during background playback by up to **30x**.
+* **Adaptive Sleep Timer**: Replaced legacy 1000ms periodic CPU wakeups with an adaptive delay (up to 30 s while far from expiry, remaining time on the last tick).
 * **Release Coroutine Optimization**: Stripped debug stack-trace overhead from coroutine suspension points in release builds.
 
 ### 👆 4. Ergonomics & Frictionless Control
-* **Intuitive Double-Tap Seeking**: Expanded video rewind/fast-forward touch zones from narrow 25% screen borders to natural 40% left and 40% right screen areas.
 * **Streamlined Settings**: Reorganized settings into 4 clean Material 3 categories (Playback & Interface, Media Library & Storage, Casting & Security, Advanced), removing duplicate and fragmented options.
 * **Modern Home Screen Widgets**: Redesigned 4x1 and 4x2 widgets with clean typography and layout.
 

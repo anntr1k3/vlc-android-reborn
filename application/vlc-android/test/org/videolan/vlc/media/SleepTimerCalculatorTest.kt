@@ -54,9 +54,27 @@ class SleepTimerCalculatorTest {
     }
 
     @Test
-    fun computeDelay_whenRemainingIsVerySmall_floorsAtMinDelay() {
+    fun computeDelay_whenRemainingIsBelowOldMinDelay_returnsExactRemaining() {
         val target = 100_000L
-        val now = 99_800L // 200ms remaining
+        val now = 99_800L // 200ms remaining — must not clamp up to MIN_DELAY_MS
+
+        val delay = SleepTimerCalculator.computeDelay(target, now, waitForMediaEnd = false)
+        assertEquals(200L, delay)
+    }
+
+    @Test
+    fun computeDelay_whenOneMillisecondRemains_returnsOne() {
+        val target = 100_000L
+        val now = 99_999L
+
+        val delay = SleepTimerCalculator.computeDelay(target, now, waitForMediaEnd = false)
+        assertEquals(1L, delay)
+    }
+
+    @Test
+    fun computeDelay_whenExpiredAndNotWaitingForMediaEnd_returnsMinDelay() {
+        val target = 100_000L
+        val now = 100_000L
 
         val delay = SleepTimerCalculator.computeDelay(target, now, waitForMediaEnd = false)
         assertEquals(SleepTimerCalculator.MIN_DELAY_MS, delay)

@@ -268,8 +268,20 @@ internal class AudioPlayerAnimator : IAudioPlayerAnimator, LifecycleObserver {
 
     override fun onSlide(slideOffset: Float) {
         if (inSearch) return
-        binding.progressBar.alpha = 1 - slideOffset
-        binding.progressBar.scaleY = 1 - slideOffset
+        val progressBar = binding.progressBar
+        // Keep scaleY/alpha on the GPU during the gesture. Release layout space only
+        // at rest when fully expanded so the header is not pinned 4dp below a
+        // zero-scale bar. Pivot at the top so the bar shrinks toward the sheet edge.
+        if (slideOffset >= 1f) {
+            progressBar.visibility = View.GONE
+            progressBar.scaleY = 1f
+            progressBar.alpha = 1f
+        } else {
+            progressBar.visibility = View.VISIBLE
+            progressBar.pivotY = 0f
+            progressBar.alpha = 1 - slideOffset
+            progressBar.scaleY = 1 - slideOffset
+        }
         // 0% to 40%
         binding.headerBackground.alpha = if (showCover) (1 - slideOffset) * 0.6F else 0.4F + ((1 - slideOffset) * 0.6F)
         binding.headerDivider.alpha = if (showCover) 0F else slideOffset

@@ -986,8 +986,6 @@
     <string name="share_track_info">שיתוף פרטי הרצועה</string>
     <string name="share_track">כרגע בהאזנה ל־%s</string>
     <string name="find_metadata">איתור נתוני על</string>
-    <string name="moviepedia_hint">חיפוש נתוני על</string>
-    <string name="moviepedia_result">תוצאות וידאו</string>
     <string name="directed_by">בוים על ידי</string>
     <string name="casting">ליהוק</string>
     <string name="produced_by">הופק על ידי</string>

@@ -729,8 +729,6 @@
     <string name="share_file">പങ്കിടുക %s</string>
     <string name="share_message">ഇവിടെയാണ് %s</string>
     <string name="find_metadata">മെറ്റാ ഡാറ്റ കണ്ടെത്തുക </string>
-    <string name="moviepedia_hint">മെറ്റാ ഡാറ്റ തിരയുക </string>
-    <string name="moviepedia_result">വീഡിയോ ഫലങ്ങൾ</string>
     <string name="directed_by">സംവിധാനം</string>
     <string name="casting">കാസ്റ്റിങ് </string>
     <string name="produced_by">നിർമ്മിച്ചത് </string>

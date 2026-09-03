@@ -962,8 +962,6 @@
     <string name="share_track_info">Track-info delen</string>
     <string name="share_track">Luistert momenteel naar %s</string>
     <string name="find_metadata">Metadata zoeken</string>
-    <string name="moviepedia_hint">Metadata doorzoeken</string>
-    <string name="moviepedia_result">Videoresultaten</string>
     <string name="directed_by">Geregisseerd door</string>
     <string name="casting">Casting</string>
     <string name="produced_by">Geproduceerd door</string>

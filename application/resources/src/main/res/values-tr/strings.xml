@@ -967,8 +967,6 @@
     <string name="share_track_info">Kayıt bilgilerini paylaş</string>
     <string name="share_track">Şu anda %s dinleniyor</string>
     <string name="find_metadata">Üst verileri bul</string>
-    <string name="moviepedia_hint">Üst veri arama</string>
-    <string name="moviepedia_result">Görüntü sonuçları</string>
     <string name="directed_by">Yönetmen</string>
     <string name="casting">Aktarım</string>
     <string name="produced_by">Yapımcı</string>

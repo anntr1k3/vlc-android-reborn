@@ -619,8 +619,6 @@
     <string name="share_file">Rhannu %s</string>
     <string name="share_message">Dyma %s</string>
     <string name="find_metadata">Canfod metaddata</string>
-    <string name="moviepedia_hint">Chwilio metaddata</string>
-    <string name="moviepedia_result">Canlyniadau fideos</string>
     <string name="directed_by">Cyfarwyddwyd gan</string>
     <string name="casting">Castio</string>
     <string name="produced_by">Cynhyrchwyd gan</string>

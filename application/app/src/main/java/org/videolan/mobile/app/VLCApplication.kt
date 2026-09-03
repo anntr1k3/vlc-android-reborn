@@ -1,5 +1,5 @@
 /*****************************************************************************
- * VLCApplication.ki
+ * VLCApplication.kt
  *
  * Copyright © 2010-2020 VLC authors and VideoLAN
  *

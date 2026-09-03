@@ -945,8 +945,6 @@
     <string name="share_track_info">Поділитися інформацією про доріжку</string>
     <string name="share_track">Наразі слухаємо %s</string>
     <string name="find_metadata">Знайти метадані</string>
-    <string name="moviepedia_hint">Пошук метаданих</string>
-    <string name="moviepedia_result">Відео результати</string>
     <string name="directed_by">Режисер</string>
     <string name="casting">Трансляція</string>
     <string name="produced_by">Знято</string>

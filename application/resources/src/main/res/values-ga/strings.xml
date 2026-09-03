@@ -608,8 +608,6 @@
     <string name="share_file">Comhroinn %s</string>
     <string name="share_message">Seo é %s</string>
     <string name="find_metadata">Aimsigh meiteashonraí</string>
-    <string name="moviepedia_hint">Cuardaigh meiteashonraí</string>
-    <string name="moviepedia_result">Torthaí do na fiseáin</string>
     <string name="directed_by">Arna stiúrtha ag</string>
     <string name="casting">Roghnú aisteoirí</string>
     <string name="produced_by">Arna léiriú ag</string>

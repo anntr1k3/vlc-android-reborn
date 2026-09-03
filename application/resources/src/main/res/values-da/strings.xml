@@ -939,8 +939,6 @@
     <string name="share_track_info">Del sporets info</string>
     <string name="share_track">Lytter nu til %s</string>
     <string name="find_metadata">Find metadata</string>
-    <string name="moviepedia_hint">Søg efter metadata</string>
-    <string name="moviepedia_result">Videoresultater</string>
     <string name="directed_by">Instrueret af</string>
     <string name="casting">Casting</string>
     <string name="produced_by">Produceret af</string>

@@ -577,8 +577,6 @@
     <string name="share_file">%s साझा गर्नुहोस्</string>
     <string name="share_message">यहाँ %s छ</string>
     <string name="find_metadata">मेटाडाटा फेला पार्नुहोस्</string>
-    <string name="moviepedia_hint">मेटाडाटा खोज्नुहोस्</string>
-    <string name="moviepedia_result">भिडियो नतिजा</string>
     <string name="directed_by">द्वारा निर्देशित</string>
     <string name="casting">कास्टिङ</string>
     <string name="produced_by">निर्माता</string>

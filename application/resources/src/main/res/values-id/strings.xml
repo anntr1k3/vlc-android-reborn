@@ -785,8 +785,6 @@
     <string name="share_file">Bagikan %s</string>
     <string name="share_message">Disini %s</string>
     <string name="find_metadata">Temukan metadata</string>
-    <string name="moviepedia_hint">Cari metadata</string>
-    <string name="moviepedia_result">Hasil video</string>
     <string name="directed_by">Disutradarai oleh</string>
     <string name="casting">Pemeran</string>
     <string name="produced_by">Diproduser oleh</string>

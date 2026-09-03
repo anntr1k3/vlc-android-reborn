@@ -968,8 +968,6 @@
     <string name="share_track_info">Share the track info</string>
     <string name="share_track">Currently listening to %s</string>
     <string name="find_metadata">Find metadata</string>
-    <string name="moviepedia_hint">Search metadata</string>
-    <string name="moviepedia_result">Video results</string>
     <string name="directed_by">Directed by</string>
     <string name="casting">Casting</string>
     <string name="produced_by">Produced by</string>

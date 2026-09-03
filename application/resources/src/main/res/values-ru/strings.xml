@@ -263,7 +263,7 @@
     <string name="hold_to_stop">Удержание — останов</string>
 
     <!-- About -->
-    <string name="app_name_full">VLC для Android</string>
+    <string name="app_name_full">VLC Reborn для Android</string>
     <string name="revision">Ревизия</string>
     <string name="about">О программе</string>
     <string name="about_vlc_text">VLC для Android™ - порт медиаплеера VLC (популярного плеера с открытым исходным кодом). Версия для Android™ может воспроизводить любые файлы и сетевые потоки.</string>
@@ -734,8 +734,6 @@
     <string name="share_file">Поделиться %s</string>
     <string name="share_message">Здесь %s</string>
     <string name="find_metadata">Найти метаданные</string>
-    <string name="moviepedia_hint">Поиск метаданных</string>
-    <string name="moviepedia_result">Найденные видео</string>
     <string name="directed_by">Режиссёр</string>
     <string name="casting">Подбор актёров</string>
     <string name="produced_by">Производство</string>

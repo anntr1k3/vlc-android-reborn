@@ -953,8 +953,6 @@
     <string name="share_track_info">分享軌道資訊</string>
     <string name="share_track">目前正在聆聽 %s</string>
     <string name="find_metadata">尋找詮釋資料</string>
-    <string name="moviepedia_hint">搜尋詮釋資料</string>
-    <string name="moviepedia_result">視訊結果</string>
     <string name="directed_by">導演為</string>
     <string name="casting">正在投放</string>
     <string name="produced_by">製作人為</string>

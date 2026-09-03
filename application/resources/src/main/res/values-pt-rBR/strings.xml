@@ -855,8 +855,6 @@
     <string name="share_file">Compartilhar 1%s</string>
     <string name="share_message">Aqui está 1%s</string>
     <string name="find_metadata">Encontrar metadados</string>
-    <string name="moviepedia_hint">Pesquisar metadados</string>
-    <string name="moviepedia_result">Resultados de vídeo</string>
     <string name="directed_by">Dirigido por</string>
     <string name="casting">Estrelando</string>
     <string name="produced_by">Produzido por</string>

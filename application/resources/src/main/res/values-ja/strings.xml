@@ -955,8 +955,6 @@
     <string name="share_track_info">トラックの情報を共有</string>
     <string name="share_track">現在視聴中 %s</string>
     <string name="find_metadata">メタデータの検索</string>
-    <string name="moviepedia_hint">メタデータを検索</string>
-    <string name="moviepedia_result">ビデオの検索結果</string>
     <string name="directed_by">監督</string>
     <string name="casting">キャスティング</string>
     <string name="produced_by">プロデューサー</string>

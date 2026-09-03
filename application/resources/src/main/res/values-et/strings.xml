@@ -970,8 +970,6 @@
     <string name="share_track_info">Jaga loo teavet</string>
     <string name="share_track">Hetkel kuulan: %s</string>
     <string name="find_metadata">Leia metaandmeid</string>
-    <string name="moviepedia_hint">Otsi metaandmeid</string>
-    <string name="moviepedia_result">Video tulemused</string>
     <string name="directed_by">Režissöör</string>
     <string name="casting">Edastamine</string>
     <string name="produced_by">Produtsent</string>

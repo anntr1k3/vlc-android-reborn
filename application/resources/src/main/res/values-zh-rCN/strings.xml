@@ -953,8 +953,6 @@
     <string name="share_track_info">分享轨道信息</string>
     <string name="share_track">正在欣赏 %s</string>
     <string name="find_metadata">查找元数据</string>
-    <string name="moviepedia_hint">搜索元数据</string>
-    <string name="moviepedia_result">视频结果</string>
     <string name="directed_by">导演</string>
     <string name="casting">选角</string>
     <string name="produced_by">制片</string>

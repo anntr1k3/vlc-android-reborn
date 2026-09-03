@@ -24,6 +24,12 @@ object SleepTimerCalculator {
 
     /**
      * Computes the adaptive delay (in milliseconds) before the next timer evaluation.
+     *
+     * While plenty of time remains, the delay is capped at [MAX_DELAY_MS] so the
+     * service does not wake every second. Once remaining time is below that cap,
+     * the delay is the remaining time itself — never rounded up — so the last
+     * tick cannot overshoot the target. [MIN_DELAY_MS] is only a defensive floor
+     * after expiry when [shouldStop] did not already end the job.
      */
     fun computeDelay(
         targetTimeMs: Long,
@@ -31,10 +37,10 @@ object SleepTimerCalculator {
         waitForMediaEnd: Boolean
     ): Long {
         val remaining = targetTimeMs - nowMs
-        return if (waitForMediaEnd && remaining <= 0) {
-            MEDIA_END_POLL_DELAY_MS
-        } else {
-            minOf(maxOf(remaining, MIN_DELAY_MS), MAX_DELAY_MS)
+        return when {
+            remaining <= 0L && waitForMediaEnd -> MEDIA_END_POLL_DELAY_MS
+            remaining <= 0L -> MIN_DELAY_MS
+            else -> minOf(remaining, MAX_DELAY_MS)
         }
     }
 }

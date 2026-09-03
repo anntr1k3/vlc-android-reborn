@@ -981,8 +981,6 @@
     <string name="share_track_info">Distribuie informațiile pistei</string>
     <string name="share_track">În prezent asculți %s</string>
     <string name="find_metadata">Găsiți metadatele</string>
-    <string name="moviepedia_hint">Căutare metadate</string>
-    <string name="moviepedia_result">Rezultate video</string>
     <string name="directed_by">Regizat de</string>
     <string name="casting">Redare</string>
     <string name="produced_by">Produs de</string>

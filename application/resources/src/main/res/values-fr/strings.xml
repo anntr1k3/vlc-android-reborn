@@ -981,8 +981,6 @@
     <string name="share_track_info">Partager les informations de la piste</string>
     <string name="share_track">Actuellement à l’écoute de %s</string>
     <string name="find_metadata">Trouver les métadonnées</string>
-    <string name="moviepedia_hint">Rechercher les métadonnées</string>
-    <string name="moviepedia_result">Résultats vidéo</string>
     <string name="directed_by">Réalisé par</string>
     <string name="casting">Distribution</string>
     <string name="produced_by">Produit par</string>

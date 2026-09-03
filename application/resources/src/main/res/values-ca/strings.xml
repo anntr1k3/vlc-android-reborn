@@ -968,8 +968,6 @@
     <string name="share_track_info">Comparteix la informació de la pista</string>
     <string name="share_track">Actualment escoltant %s</string>
     <string name="find_metadata">Trobar metadades</string>
-    <string name="moviepedia_hint">Buscar metadades</string>
-    <string name="moviepedia_result">Resultats del vídeo</string>
     <string name="directed_by">Dirigit per</string>
     <string name="casting">Casting</string>
     <string name="produced_by">Produït</string>

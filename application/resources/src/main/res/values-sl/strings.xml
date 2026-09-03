@@ -990,8 +990,6 @@
     <string name="share_track_info">Deli podatke o vsebini</string>
     <string name="share_track">Trenutno se predvaja %s</string>
     <string name="find_metadata">Najdi metapodatke</string>
-    <string name="moviepedia_hint">iskanje metapodatkov</string>
-    <string name="moviepedia_result">Video rezultati</string>
     <string name="directed_by">Režija</string>
     <string name="casting">Igra</string>
     <string name="produced_by">Produkcija</string>

@@ -680,8 +680,6 @@
     <string name="share_file">Udostępnij %s</string>
     <string name="share_message">Tutaj jest %s</string>
     <string name="find_metadata">Znajdź metadane</string>
-    <string name="moviepedia_hint">Wyszukaj metadane</string>
-    <string name="moviepedia_result">Wyniki wideo</string>
     <string name="directed_by">Reżyseria:</string>
     <string name="casting">Obsada:</string>
     <string name="produced_by">Produkcja:</string>

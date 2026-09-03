@@ -836,8 +836,6 @@ Bạn có thể phải nhấn vào \"Hiển thị thẻ nhớ SD\" trước tron
     <string name="share_file">Chia sẻ %s</string>
     <string name="share_message">Đây là %s</string>
     <string name="find_metadata">Tìm siêu dữ liệu</string>
-    <string name="moviepedia_hint">Tìm kiếm siêu dữ liệu</string>
-    <string name="moviepedia_result">Kết quả video</string>
     <string name="directed_by">Được đạo diễn bởi</string>
     <string name="casting">Truyền</string>
     <string name="produced_by">Được sản xuất bởi</string>

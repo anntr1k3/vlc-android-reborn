@@ -825,8 +825,6 @@
     <string name="share_file">مشاركة %s</string>
     <string name="share_message">ها هو %s</string>
     <string name="find_metadata">البحث عن الوصف</string>
-    <string name="moviepedia_hint">وصف البحث</string>
-    <string name="moviepedia_result">نتائج الفيديو</string>
     <string name="directed_by">إخراج</string>
     <string name="casting">يتم الآن التحويل</string>
     <string name="produced_by">انتجت من</string>

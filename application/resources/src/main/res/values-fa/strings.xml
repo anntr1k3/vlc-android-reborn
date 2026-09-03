@@ -722,8 +722,6 @@
     <string name="share_file">اشتراک گذاری %s</string>
     <string name="share_message">%sآماده است</string>
     <string name="find_metadata">یافتن فراداده</string>
-    <string name="moviepedia_hint">جستجوی فراداده</string>
-    <string name="moviepedia_result">نتیجه‌ های ویدیو</string>
     <string name="directed_by">کارگردان</string>
     <string name="casting">بازیگران</string>
     <string name="produced_by">تهیه کننده</string>

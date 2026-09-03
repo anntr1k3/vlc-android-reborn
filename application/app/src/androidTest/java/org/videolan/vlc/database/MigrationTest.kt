@@ -82,14 +82,14 @@ class MigrationTest {
 
     @Test fun migrateFrom26() {
         // Slave
-        val slaveMedia1Path = "/storage/emulated/0/Android/data/org.videolan.vlc.debug/files/subs/file1.mkv"
-        val slaveMedia1UriFa = "file:///storage/emulated/0/Android/data/org.videolan.vlc.debug/files/subs/file1.fa.srt"
+        val slaveMedia1Path = "/storage/emulated/0/Android/data/org.videolan.vlc.reborn.debug/files/subs/file1.mkv"
+        val slaveMedia1UriFa = "file:///storage/emulated/0/Android/data/org.videolan.vlc.reborn.debug/files/subs/file1.fa.srt"
         // External Sub
         val exSubMedia1Name = "file1.mkv"
-        val exSubMedisubsFolder = "/storage/emulated/0/Android/data/org.videolan.vlc.debug/files/subs/"
+        val exSubMedisubsFolder = "/storage/emulated/0/Android/data/org.videolan.vlc.reborn.debug/files/subs/"
         val exSubfile1Sub1 = "${exSubMedisubsFolder}file1.eng.srt"
         // Favs
-        val favUri = "/storage/emulated/0/Android/data/org.videolan.vlc.debug/files/subs/file1.mkv".toUri()
+        val favUri = "/storage/emulated/0/Android/data/org.videolan.vlc.reborn.debug/files/subs/file1.mkv".toUri()
         val favTitle = "test1"
 
         val sqliteTestDbOpenHelper = SqliteTestDbOpenHelper(InstrumentationRegistry.getTargetContext(), TEST_DB_NAME, 26)

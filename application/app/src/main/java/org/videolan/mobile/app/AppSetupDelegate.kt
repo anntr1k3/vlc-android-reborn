@@ -1,5 +1,5 @@
 /*****************************************************************************
- * AppSetupDelegate.ki
+ * AppSetupDelegate.kt
  *
  * Copyright © 2020 VLC authors and VideoLAN
  *

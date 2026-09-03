@@ -753,8 +753,6 @@
     <string name="share_file">Rannañ %s</string>
     <string name="share_message">Ha setu %s</string>
     <string name="find_metadata">Kavout metaroadennoù</string>
-    <string name="moviepedia_hint">Klask metaroadennoù</string>
-    <string name="moviepedia_result">Disoc\'hoù video</string>
     <string name="directed_by">Renet gant</string>
     <string name="casting">Skignañ</string>
     <string name="produced_by">Produet gant</string>

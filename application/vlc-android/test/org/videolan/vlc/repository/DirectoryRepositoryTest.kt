@@ -8,16 +8,18 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
-import org.mockito.Mockito.*
-import org.powermock.modules.junit4.PowerMockRunner
+import org.mockito.Mockito.times
+import org.mockito.Mockito.verify
+import org.mockito.Mockito.`when`
+import org.mockito.junit.MockitoJUnitRunner
 import org.videolan.vlc.database.CustomDirectoryDao
-import org.videolan.vlc.database.MediaDatabase
 import org.videolan.vlc.mediadb.models.CustomDirectory
 import org.videolan.vlc.util.TestUtil
 import org.videolan.vlc.util.argumentCaptor
+import org.videolan.vlc.util.mock
 import org.videolan.vlc.util.uninitialized
 
-@RunWith(PowerMockRunner::class)
+@RunWith(MockitoJUnitRunner.Silent::class)
 class DirectoryRepositoryTest {
     private val customDirectoryDao = mock<CustomDirectoryDao>()
     private lateinit var directoryRepository: DirectoryRepository
@@ -27,8 +29,6 @@ class DirectoryRepositoryTest {
     val instantExecutorRule = InstantTaskExecutorRule()
 
     @Before fun init() {
-        val db = mock<MediaDatabase>()
-        `when`(db.customDirectoryDao()).thenReturn(customDirectoryDao)
         directoryRepository = DirectoryRepository(customDirectoryDao)
     }
 
@@ -85,7 +85,7 @@ class DirectoryRepositoryTest {
         assertThat(inserted.allValues.size, `is`(1))
         assertThat(inserted.allValues[0], `is`(fakeCustomDirectories[0]))
 
-        `when`(customDirectoryDao[fakeCustomDirectories[0].path]).thenReturn(fakeCustomDirectories)
+        `when`(customDirectoryDao.get(fakeCustomDirectories[0].path)).thenReturn(fakeCustomDirectories)
 
         val bool = directoryRepository.customDirectoryExists(fakeCustomDirectories[0].path)
         assertTrue(bool)
@@ -103,7 +103,7 @@ class DirectoryRepositoryTest {
         assertThat(inserted.allValues.size, `is`(1))
         assertThat(inserted.allValues[0], `is`(fakeCustomDirectories[0]))
 
-        `when`(customDirectoryDao[fakeCustomDirectories[0].path]).thenReturn(fakeCustomDirectories)
+        `when`(customDirectoryDao.get(fakeCustomDirectories[0].path)).thenReturn(fakeCustomDirectories)
 
         val bool = directoryRepository.customDirectoryExists(fakeCustomDirectories[0].path+"foo")
         assertFalse(bool)

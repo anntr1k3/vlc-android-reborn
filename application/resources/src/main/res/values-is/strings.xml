@@ -760,8 +760,6 @@
     <string name="share_file">Deila %s</string>
     <string name="share_message">Hér er %s</string>
     <string name="find_metadata">Finna lýsigögn</string>
-    <string name="moviepedia_hint">Leita að lýsigögnum</string>
-    <string name="moviepedia_result">Niðurstöður myndskeiða</string>
     <string name="directed_by">Leikstýrt af</string>
     <string name="casting">Leikarar</string>
     <string name="produced_by">Framleitt af</string>

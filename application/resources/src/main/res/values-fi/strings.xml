@@ -987,8 +987,6 @@ Voit toistaa vain suoratoistoa tai verkkomediaa</string>
     <string name="share_track_info">Jaa raidan tiedot</string>
     <string name="share_track">Kuuntelet %s</string>
     <string name="find_metadata">Löydä metatiedot</string>
-    <string name="moviepedia_hint">Etsi metatiedot</string>
-    <string name="moviepedia_result">Videon tuloksia</string>
     <string name="directed_by">Ohjannut</string>
     <string name="casting">Lähetys</string>
     <string name="produced_by">Tuottanut</string>

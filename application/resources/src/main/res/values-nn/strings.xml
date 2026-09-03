@@ -628,8 +628,6 @@
     <string name="share_file">Del %s</string>
     <string name="share_message">Her er %s</string>
     <string name="find_metadata">Finn metadata</string>
-    <string name="moviepedia_hint">Søk i metadata</string>
-    <string name="moviepedia_result">Videoresultat</string>
     <string name="directed_by">Regissert av</string>
     <string name="produced_by">Produsert av</string>
     <string name="written_by">Skriven av</string>

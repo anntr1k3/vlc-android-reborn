@@ -95,14 +95,25 @@ abstract class MedialibraryProvider<T : MediaLibraryItem>(val context: Context, 
                 when (val count = getTotalCount()) {
                     0 -> listOf()
                     in 1..MEDIALIBRARY_PAGE_SIZE -> pageSizeLambda(service)
-                    else -> ArrayList<MediaWrapper>(count).apply {
+                    else -> {
+                        val tracks = ArrayList<MediaWrapper>()
                         var index = 0
                         while (index < count) {
                             val pageCount = min(MEDIALIBRARY_PAGE_SIZE, count - index)
                             val page = getPage(pageCount, index)
-                            for (item in page) addAll(item.tracks)
+                            if (index == 0 && page.isNotEmpty()) {
+                                val sampleTracks = page.sumOf { it.tracksCount.coerceAtLeast(0) }
+                                if (sampleTracks > 0) {
+                                    val estimated = (sampleTracks.toLong() * count / page.size)
+                                        .coerceAtMost(Int.MAX_VALUE.toLong())
+                                        .toInt()
+                                    tracks.ensureCapacity(estimated)
+                                }
+                            }
+                            for (item in page) tracks.addAll(item.tracks)
                             index += pageCount
                         }
+                        tracks
                     }
                 }
             }

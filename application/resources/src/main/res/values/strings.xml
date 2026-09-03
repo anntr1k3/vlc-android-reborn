@@ -5,7 +5,7 @@
     <!-- Main VLC Interface -->
     <string name="ok">OK</string>
     <string name="cancel">Cancel</string>
-    <string name="app_name" translatable="false">VLC</string>
+    <string name="app_name" translatable="false">VLC Reborn</string>
     <string name="other">Other</string>
     <string name="sortby">Sort by…</string>
     <string name="sortby_name">Name</string>
@@ -322,7 +322,7 @@
     <string name="hold_to_stop">Hold to stop</string>
 
     <!-- About -->
-    <string name="app_name_full">VLC for Android</string>
+    <string name="app_name_full">VLC Reborn for Android</string>
     <string name="revision">Revision</string>
     <string name="about">About</string>
     <string name="about_vlc_text">VLC for Android™ is a port of VLC media player, the popular open source media player. The Android™ version can read all files and network streams.</string>
@@ -986,8 +986,6 @@
     <string name="share_track_info">Share the track info</string>
     <string name="share_track">Currently listening to %s</string>
     <string name="find_metadata">Find metadata</string>
-    <string name="moviepedia_hint">Search metadata</string>
-    <string name="moviepedia_result">Video results</string>
     <string name="directed_by">Directed by</string>
     <string name="casting">Casting</string>
     <string name="produced_by">Produced by</string>
